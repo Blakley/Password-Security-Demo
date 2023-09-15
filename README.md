@@ -1,2 +1,9 @@
 # Password-Security-Demo
-Presentation demo server
+
+An educational project showcasing brute forcing techniques and common mitigations. 
+
+
+## Dependenices
+
+
+## Deployment

@@ -1,15 +1,20 @@
+# imports
 import os
 import time
 import platform
 
-# Monitor server traffic
+
+'''
+    Monitors the clients.log file for changes
+    the file is updated whenever a login forum is submitted
+'''
 class Monitor(object):
     def __init__(self):
         self.output_log = 'logs/clients.log'
-        self.capture()
+        self.monitor()
 
-    # output and capture server traffic
-    def capture(self):
+    # capture new traffic
+    def monitor(self):
         previous_time = 0
 
         while True:
@@ -32,7 +37,7 @@ class Monitor(object):
 
             time.sleep(1)
 
-        
-# begin script
+
+# start
 if __name__ == '__main__':
     m = Monitor()

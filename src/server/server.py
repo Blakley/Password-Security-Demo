@@ -1,16 +1,16 @@
-import time
-from datetime import datetime, timedelta
-
+# imports
 import os
+import time
 import logging
 import webbrowser
 import http.server
 import socketserver
-
-from termcolor import colored, cprint
+from termcolor import colored
+from datetime import datetime, timedelta
 from urllib.parse import urlparse, parse_qs
 
-# page access flags
+
+# page access flags : determines if user can access page
 accessible = {
 	'1' : True,	  # page 1
 	'2' : False,  # page 2
@@ -245,24 +245,24 @@ class Server(http.server.BaseHTTPRequestHandler):
 
 
 
-
 # start script
 if __name__ == '__main__':
 	# set server port
 	port = 8000
+	host = 'localhost' 
 
 	# configure client connection logs
 	logging.basicConfig(filename='logs/clients.log', level=logging.INFO, format='%(asctime)s - %(message)s')
 
 	# run server
-	with socketserver.TCPServer(("", port), Server) as web:
+	with socketserver.TCPServer((host, port), Server) as web:
 
 		c = colored('WebServer', 'cyan', attrs = ['bold', 'underline'])
 		p = colored(f'{port}', 'magenta', attrs = ['reverse'])
 		print(f"\n{c} running on port: {p}\n")
 
 		# open server home page
-		webbrowser.open('http://localhost:8000/home.html')
+		webbrowser.open(f'http://{host}:8000/home.html')
 
 		try:
 			web.serve_forever()
@@ -277,7 +277,8 @@ if __name__ == '__main__':
                     TODO 
     ===================================
 
-    1. Brainstorm several 'index.html' showcase pages that increase the level of security
-    2. Think of and implement website theme (bank, social media platform, streamingsite, etc)
-
+	1. Refactor code to make more readable
+	2. Make one /login.html page instead of multiple. this page will contain multiple login forums
+    3. Think of and implement website theme (bank, social media platform, streamingsite, etc)
+	
 '''
