@@ -7,9 +7,9 @@ from termcolor import colored
 
 
 '''
-	Login forum bruteforce class:
-		each login forum has implements different techniques
-		to evade the implemented login forum security
+	Login form bruteforce class:
+		each login form has implements different techniques
+		to evade the implemented login form security
 '''
 class Attack():
 	def __init__(self):
@@ -28,27 +28,27 @@ class Attack():
 		self.select()
 
 
-	# select login forum to try to attack
+	# select login form to try to attack
 	def select(self):
 
-		# get login forum and username
-		route = input('Login forum number [1, 5]: ')
+		# get login form and username
+		route = input('Login form number [1, 5]: ')
 		self.username = input('Username to attack: ')
 		self.url = f'{self.url}/login_{route}'
 
 		# launch attack
 		if route == '1':
-			self.forum_1()
+			self.form_1()
 
 		if route == '2':
 			# measure execution time 
-			execution_time = timeit.timeit(self.forum_2, number=1)
+			execution_time = timeit.timeit(self.form_2, number=1)
 			print(f"Execution Time: {execution_time} seconds")
-			self.forum_2()
+			self.form_2()
 
 
-	# bruteforce login forum #1
-	def forum_1(self):
+	# bruteforce login form #1
+	def form_1(self):
 
 		# try each password until success status
 		index = 0
@@ -74,8 +74,8 @@ class Attack():
 			index += 1
 
 
-	# bruteforce login forum #2
-	def forum_2(self):
+	# bruteforce login form #2
+	def form_2(self):
 
 		index = 0
 		proxy_index = 0
@@ -123,16 +123,16 @@ class Attack():
 			index += 1
 
 
-	# bruteforce login forum #3
-	def forum_3(self):
+	# bruteforce login form #3
+	def form_3(self):
 		pass
 
-	# bruteforce login forum #4
-	def forum_4(self):
+	# bruteforce login form #4
+	def form_4(self):
 		pass
 
-	# bruteforce login forum #5
-	def forum_5(self):
+	# bruteforce login form #5
+	def form_5(self):
 		pass
 
 

@@ -10,63 +10,45 @@ from datetime import datetime, timedelta
 from urllib.parse import urlparse, parse_qs
 
 
-# page access flags : determines if user can access page
-accessible = {
-	'1' : True,	  # page 1
-	'2' : False,  # page 2
-	'3' : False,  # page 3
-	'4' : False,  # page 4
-	'5' : False	  # page 5
-}
-
 # login credentials
 credentials = {
 	'1': ('reece',   'abracadabra'),		# page 1
-	'2': ('sarah',   'chickenwing101'),	    # page 2
+	'2': ('sarah',   'chickenwing101'),		# page 2
 	'3': ('anthony', 'ezmoney'),			# page 3
 	'4': ('admin',   'WSBadmin'),			# page 4
 	'5': ('brute',   'letmein4')			# page 5
 }
 
 
-# web server class
+'''
+	Webserver class:
+		Setups a local webserver at localhost:8000
+		to handles get and posts requests
+'''
 class Server(http.server.BaseHTTPRequestHandler):
 	
 	# handle server get requests
 	def do_GET(self):
-		
-		# match directory with url route
-		page_directory = os.path.dirname(os.path.realpath(__file__))
-		page_directory = '/' + page_directory.replace('server', 'html')
 
-		if self.path == '/':
-			self.path = os.path.join(page_directory, 'home.html')
-		else:
-			self.path = os.path.join(page_directory, self.path[1:])
+		# folder directory
+		directory = os.path.dirname(os.path.realpath(__file__))
 
-		# determine if login page is accessible
-		if 'login_' in self.path:
-			# index of request page
-			i = self.path.split('login_')[1].replace('.html', '')
+		# handle css files
+		if 'css' in self.path:
+			directory = '/' + directory.replace('server', 'css')
 
-			if int(i) > 5:
-				self.invalid_route()
-				return
+		# handle html pages
+		if 'html' in self.path:
+			directory = '/' + directory.replace('server', 'html')
 
-			if not accessible[i]:
-				message = f'403 - User must login to page {int(i) - 1} first'
-				self.inaccessible_route(message)
-				return
+		# set page path
+		self.path = os.path.join(directory, self.path[1:])
 
 		# open requested page
 		try:
 			with open(self.path[1:], 'rb') as file:
 				content = file.read()
-				self.open_route_g(content)
-
-		except FileNotFoundError:
-			message = '404 - Page not found'
-			self.inaccessible_route(message)
+				self.open_route(content, 'get')
 
 		except Exception as e:
 			self.invalid_route()
@@ -80,7 +62,7 @@ class Server(http.server.BaseHTTPRequestHandler):
 		post_data = self.rfile.read(content_length).decode('utf-8')
 		parsed_data = parse_qs(post_data)
 
-		# get login forum data
+		# get login form data
 		username = parsed_data.get('username', [''])[0]
 		password = parsed_data.get('password', [''])[0]
 		client_address = self.client_address[0]
@@ -112,14 +94,12 @@ class Server(http.server.BaseHTTPRequestHandler):
 			i = int(self.path.split('_')[-1])
 
 			if self.validate(username, password, i):
-				# make next login route accessible
-				accessible[str(i + 1)] = True
 
 				# open route
 				if i <= 4:
-					self.open_route_p(f'login_{i + 1}.html')
+					self.open_route(f'login_{i + 1}.html', 'post')
 				else:
-					self.open_route_p('end.html')
+					self.open_route('end.html', 'post')
 				return
 
 
@@ -130,14 +110,12 @@ class Server(http.server.BaseHTTPRequestHandler):
 	# security for given login page
 	def security(self, page, address):
 
-		# security for login page 1
+		# security for login page 1 : [no security]
 		if '1' in page:
-			# Users can attempt unlimited login attempts without any restrictions
-			# No account lockout or password complexity requirements
 			pass
 		
 
-		# security for login page 2
+		# security for login page 2 : [rate limit]
 		if '2' in page:
 
 			# get log file path
@@ -164,21 +142,6 @@ class Server(http.server.BaseHTTPRequestHandler):
 			if attempts >= rate_limit_threshold:
 				print(f'Rate limit exceeded for {address}. Denied access.')
 				return False
-		
-
-		# security for login page 3
-		if '3' in page:
-			pass
-	
-
-		# security for login page 4
-		if '4' in page:
-			pass
-	
-
-		# security for login page 5
-		if '5' in page:
-			pass
 
 
 		return True
@@ -186,10 +149,10 @@ class Server(http.server.BaseHTTPRequestHandler):
 
 	# validate user login
 	def validate(self, username, password, page_index):
+		# check if username, password combination matches required
 		if str(page_index) in credentials:
 			d_user, d_pass = credentials[str(page_index)]
 			if username == d_user and password == d_pass:
-				# print(f'{username}, {password}: correct')
 				return True
 
 		return False
@@ -208,40 +171,29 @@ class Server(http.server.BaseHTTPRequestHandler):
 		self.end_headers()
 
 
-	# navigate to page from post request
-	def open_route_p(self, page):
-		
-		self.send_response(302)
-		self.send_header('Location', page)
-		self.end_headers()
+	# handle processing request 
+	def open_route(self, content, method):
+
+		# handle get request
+		if method == 'get':
+			self.send_response(200)
+			self.send_header('Content-type', 'text/html')
+			self.end_headers()
+			self.wfile.write(content)
+		else:
+			# handle post request
+			self.send_response(302)
+			self.send_header('Location', content)
+			self.end_headers()
 
 
-	# navigate to given page from get request
-	def open_route_g(self, content):
-		
-		self.send_response(200)
-		self.send_header('Content-type', 'text/html')
-		self.end_headers()
-		self.wfile.write(content)
-
-
-	# the page is inaccessible
-	def inaccessible_route(self, message):
-		
-		self.send_response(404)
-		self.send_header('Content-type', 'text/html')
-		self.end_headers()
-		self.wfile.write(message.encode('utf-8'))
-
-
-	# the page is invalid
+	# handle invalid page request
 	def invalid_route(self):
-		
+
 		self.send_response(500) 
 		self.send_header('Content-type', 'text/html')
 		self.end_headers()
-		error_message = "500 - Internal Server Error"
-		self.wfile.write(error_message.encode('utf-8'))
+		self.wfile.write('500 - Internal Server Error'.encode('utf-8'))
 
 
 
@@ -251,7 +203,7 @@ if __name__ == '__main__':
 	port = 8000
 	host = 'localhost' 
 
-	# configure client connection logs
+	# configure webserver logs
 	logging.basicConfig(filename='logs/clients.log', level=logging.INFO, format='%(asctime)s - %(message)s')
 
 	# run server
@@ -273,12 +225,13 @@ if __name__ == '__main__':
 
 
 
+
 '''
                     TODO 
     ===================================
 
 	1. Refactor code to make more readable
-	2. Make one /login.html page instead of multiple. this page will contain multiple login forums
+	2. Make one /login.html page instead of multiple. this page will contain multiple login forms
     3. Think of and implement website theme (bank, social media platform, streamingsite, etc)
 	
 '''

