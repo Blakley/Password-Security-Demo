@@ -37,7 +37,6 @@ class Monitor(object):
 
             time.sleep(1)
 
-
 # start
 if __name__ == '__main__':
     m = Monitor()
