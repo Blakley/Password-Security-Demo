@@ -44,7 +44,7 @@ class Attack():
 			# measure execution time 
 			execution_time = timeit.timeit(self.forum_2, number=1)
 			print(f"Execution Time: {execution_time} seconds")
-			# self.forum_2()
+			self.forum_2()
 
 
 	# bruteforce login forum #1
