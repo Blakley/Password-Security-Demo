@@ -2,7 +2,6 @@
 
 An educational project showcasing brute forcing techniques and common mitigations. 
 
-## Screenshots
 
 ## Dependenices
 
@@ -33,7 +32,7 @@ rate limiting and ip blocking.
 ## Deployment
 
 * To start the server, execute the `server.py` file
-* You can test bruteforcing either login form by either using a tool like [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained by.
+* You can test bruteforcing either login form by either using a tool like [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
 
 ### Todo
 * Test security for Login Form 2
