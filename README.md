@@ -31,7 +31,7 @@ rate limiting and ip blocking.
 
 ## Deployment
 
-* To start the server, execute the `server.py` file
+* To start the server, execute the `server.py` file and navgiate to the [localhost url](http://127.0.0.1:5000/)
 * You can test bruteforcing either login form by either using a tool like [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
 
 ### Todo
