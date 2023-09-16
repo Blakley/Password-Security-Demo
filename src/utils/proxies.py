@@ -52,6 +52,10 @@ class Proxy():
             else:
                 break
 
+        # Save the ip addresses
+        with open('proxies', 'w') as file:
+            file.write('\n'.join(self.ip_addresses))
+        
 
     # create private ips from list
     def create(self):

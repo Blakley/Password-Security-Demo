@@ -24,7 +24,7 @@ Sets up a webserver and handles get/posts requests made to the webpage. Also han
 ### monitor.py
 Constantly monitors the client log file, used in demonstration
 
-### clients.log
+### login.log
 Displays the Data/Time, IP Address, and attempted credentials on the login forums.
 
 ### attack.py

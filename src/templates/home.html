@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Demo</title>
+
+        <!--  -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    </head>
+
+    <body id="body">
+
+        <!-- -->
+        <header class="navigation">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg p-0">
+                  <!--  -->
+                  <a class="navbar-brand" href="home.html">
+                        Demo
+                  </a>
+
+                  <!--  -->
+                  <div class="collapse navbar-collapse ml-auto">
+                      <ul class="navbar-nav ml-auto">
+                          <li class="nav-item active"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{{ url_for('learn') }}">Learn</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{{ url_for('demo') }}">Demo</a></li>
+                      </ul>
+                  </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- -->
+        <section class="slider">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <h1 class="animated fadeInUp">
+                                Password Security<br>Demo
+                            </h1>
+                            <p class="animated fadeInUp">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- -->
+        <section class="service">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="section-title">
+                            <h2>Mitigations</h2>
+                            <p>
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Rate limiting, Account lockout, IP blocking -->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <i class="icon ion-coffee"></i>
+                            <h4>Rate Limiting &<br>Account lockout</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                        </div>
+                    </div>
+
+                    <!-- Captcha services -->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <i class="ion-compass"></i>
+                            <h4>Captcha</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                        </div>
+                    </div>
+
+                    <!--Multi-Factor Authentication (MFA)-->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <i class="ion-image"></i>
+                            <h4>Multi-Factor Authentication</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                        </div>
+                    </div>
+
+                    <!-- Single Sign-On (SSO)-->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <i class="ion-bug"></i>
+                            <h4>Single Sign-On (SSO)</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <!-- -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="copyright mb-0">
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit <br>
+                          Lorem ipsum <a href="">consectetur adipisicing elit</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- -->
+        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    </body>
+</html>
+

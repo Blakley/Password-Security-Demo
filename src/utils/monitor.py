@@ -10,7 +10,7 @@ import platform
 '''
 class Monitor(object):
     def __init__(self):
-        self.output_log = 'logs/clients.log'
+        self.output_log = '../login.log'
         self.monitor()
 
     # capture new traffic
