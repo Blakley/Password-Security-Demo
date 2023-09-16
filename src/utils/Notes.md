@@ -4,14 +4,14 @@
 Homepage for the website
 
 ### /login
-Page containing demo login forums to showcase potential brute forcing techniques / mitigations. 
+Page containing demo login forms to showcase potential brute forcing techniques / mitigations. 
 
-- Login Forum 1: No security
-- Login Forum 2: IP Rate Limiting
-- Login Forum 3: Captcha
-- Login Forum 4: Account lockout & IP blocking
-- Login Forum 5: (MFA) using SMS
-- Login Forum 6: SSO Provider (Google Login)
+- Login Form 1: No security
+- Login Form 2: IP Rate Limiting
+- Login Form 3: Captcha
+- Login Form 4: Account lockout & IP blocking
+- Login Form 5: (MFA) using SMS
+- Login Form 6: SSO Provider (Google Login)
 
 ### /learn
 Page detailing Rate limiting, Captchas, Account lockout, IP blacklisting,  and MFA. Namely, what they are, how they’re implemented, and pros of cons of each
@@ -32,4 +32,4 @@ Script demonstrating how attackers bruteforce credentials on the login demo foru
 
 ### proxies.py
 This script creates virtual ip addresses on the computer which act like
-proxies to allow bypassing rate limit bruteforcing in login forum #2
+proxies to allow bypassing rate limit & IP blocking bruteforcing 
