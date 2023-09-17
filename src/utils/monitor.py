@@ -5,7 +5,7 @@ import platform
 
 
 '''
-    Monitors the clients.log file for changes
+    Monitors the clients.log file for changes 
     the file is updated whenever a login forum is submitted
 '''
 class Monitor(object):
@@ -32,7 +32,7 @@ class Monitor(object):
                     content = file.read()
                     print(content)
 
-                # Update the previous time
+                # update the previous time
                 previous_time = current_time
 
             time.sleep(1)

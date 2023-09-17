@@ -93,6 +93,10 @@ class Proxy():
                 command = f'powershell -Command "Remove-NetIPAddress -InterfaceAlias \'{alias}\'"'
                 subprocess.run(command, shell=True, check=True)
 
+        # clear proxy file
+        with open('proxies', 'w') as file:
+            pass
+
         print('removed created ips\n')
 
 
