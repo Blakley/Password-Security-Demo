@@ -35,6 +35,6 @@ rate limiting and ip blocking.
 * You can test bruteforcing either login form by either using a tool like [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
 
 ### Todo
-* Test security for Login Form 2
-* Implement security for Login Forms 3, 4, 5, and 6
+* Implement Login Form 3 security: login captcha
+* Implement security for Login Forms 4, 5, and 6
 * Replace dummy text with researched text/topics

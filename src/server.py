@@ -12,13 +12,13 @@ from flask import Flask, request, render_template, jsonify, redirect, make_respo
 app = Flask(__name__)  
 
 # setup login form credentials
-passwords = [line.strip() for line in open('utils/passwords', 'r')]
+passwords = [line.strip() for line in open('utils/scripts/passwords', 'r')]
 credentials = {
-    1: ('reece@secure.com',   random.choice(passwords)),
-    2: ('sarah@secure.com',   random.choice(passwords)),
-    3: ('anthony@secure.com', random.choice(passwords)),
-    4: ('admin@secure.com',   random.choice(passwords)),
-    5: ('brute@secure.com',   random.choice(passwords))
+    1: ('admin@secure.com', random.choice(passwords)),
+    2: ('admin@secure.com', random.choice(passwords)),
+    3: ('admin@secure.com', random.choice(passwords)),
+    4: ('admin@secure.com', random.choice(passwords)),
+    5: ('admin@secure.com', random.choice(passwords))
 }
 
 '''
@@ -148,25 +148,29 @@ def login(form_number):
     # get client's IP address
     client_address = request.remote_addr
     
+    # handle login security
+    grant_acess = security(client_address, form_number)
+    
+    # unauthorized access
+    if grant_acess == 'rate limited':
+        return jsonify({'message': 'Try again later, account has reached the maximum number of login attempts'})
+
+    # suspcious activity
+    if grant_acess == 'account lockout':
+        return jsonify({
+            'message' : grant_acess, 
+            "redirect_url": "/error"
+        })
+        
     # log request
     login_logger = logging.getLogger('login')
     login_logger.info(
         f"IP: {client_address}, Username: {username}, Password: {password}"
     )
 
-    # handle login security
-    grant_acess = security(client_address, form_number)
-    
-    # unauthorized access
-    if grant_acess == 'rate limited':
-        # return jsonify({"redirect_url": "/error"}) [will be used for ip blocking @login form4]
-        response = make_response('', 401)
-        return response
-        
     # return login validation result
     response_data = validate(username, password, form_number)
     return jsonify(response_data)
-
 
 
 # start

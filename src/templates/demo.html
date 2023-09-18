@@ -68,8 +68,11 @@
                         <div class="col-md-0 login-form">
                             <div class="login-item">
                                 <div class="login-title">
-                                    <h3 class="animated fadeInUp">Lorem Lorem Lorem Lorem Lorem</h3>
-                                    <strong class="value animated fadeInUp">Lorem 1</strong>
+                                    <p3 class="animated fadeInUp">
+                                        My account is <strong>admin@secure.com</strong><br>
+                                        I don't mind sharing it because you'll never guess the password
+                                    </p3>
+                                    <strong class="value animated fadeInUp">Login</strong>
 
                                     <form id="login-form-1" class="user-login-form form" action="/login_1" method="post" autocomplete="off">                 
                                         <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
@@ -78,8 +81,7 @@
                                         <button class="submit1" type="submit">Sign in</button>
                                     </form>
 
-                                    <p id="invalid1"></p>
-                                    <p id="correct1"></p>
+                                    <p id="status1"></p>
                                 </div>
                             </div>
                         </div>
@@ -90,8 +92,11 @@
                         <div class="col-md-0 login-form">
                             <div class="login-item">
                                 <div class="login-title">
-                                    <h3 class="animated fadeInUp">Lorem Lorem Lorem Lorem Lorem</h3>
-                                    <strong class="value animated fadeInUp">Lorem 2</strong>
+                                    <p3 class="animated fadeInUp">
+                                        I'm never given out my account information<br>
+                                        I changed my password and you won't be easily guess it either!
+                                    </p3>
+                                    <strong class="value animated fadeInUp">Login</strong>
 
                                     <form id="login-form-2" class="user-login-form form" action="/login_2" method="post" autocomplete="off">                 
                                         <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
@@ -100,8 +105,7 @@
                                         <button class="submit2" type="submit">Sign in</button>
                                     </form>
 
-                                    <p id="invalid2"></p>
-                                    <p id="correct2"></p>
+                                    <p id="status2"></p>
                                 </div>
                             </div>
                         </div>
@@ -113,8 +117,10 @@
                             <div class="login-item">
                                 
                                 <div class="login-title">
-                                    <h3 class="animated fadeInUp">Lorem Lorem Lorem Lorem Lorem</h3>
-                                    <strong class="value animated fadeInUp">Lorem 3</strong>
+                                    <p3 class="animated fadeInUp">
+                                        I learned my lesson, only humans can access my website!
+                                    </p3>
+                                    <strong class="value animated fadeInUp">Login</strong>
 
                                     <form id="login-form-3" class="user-login-form form" action="/login_3" method="post" autocomplete="off">                 
                                         <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
@@ -123,8 +129,7 @@
                                         <button class="submit3" type="submit">Sign in</button>
                                     </form>
 
-                                    <p id="invalid3"></p>
-                                    <p id="correct3"></p>
+                                    <p id="status3"></p>
                                 </div>
                             </div>
                         </div>
@@ -136,8 +141,10 @@
                             <div class="login-item">
                                 
                                 <div class="login-title">
-                                    <h3 class="animated fadeInUp">Lorem Lorem Lorem Lorem Lorem</h3>
-                                    <strong class="value animated fadeInUp">Lorem 4</strong>
+                                    <p3 class="animated fadeInUp">
+                                        I implemented a lockout policy and finally am at ease<br>
+                                    </p3>
+                                    <strong class="value animated fadeInUp">Login</strong>
 
                                     <form id="login-form-4" class="user-login-form form" action="/login_4" method="post" autocomplete="off">                 
                                         <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
@@ -146,8 +153,7 @@
                                         <button class="submit4" type="submit">Sign in</button>
                                     </form>
 
-                                    <p id="invalid4"></p>
-                                    <p id="correct4"></p>
+                                    <p id="status4"></p>
                                 </div>
                             </div>
                         </div>
@@ -168,9 +174,6 @@
                                         <br>
                                         <button class="submit5" type="submit">Sign in</button>
                                     </form>
-
-                                    <p id="invalid5"></p>
-                                    <p id="correct5"></p>
                                 </div>
                             </div>
                         </div>
@@ -192,8 +195,6 @@
                                         <button class="submit6" type="submit">Sign in</button>
                                     </form>
 
-                                    <p id="invalid6"></p>
-                                    <p id="correct6"></p>
                                 </div>
                             </div>
                         </div>
@@ -299,18 +300,25 @@
 
                     // update the login status msg
                     $.post(route, $(this).serialize(), function(data) {
-                        if (data.message && typeof data.message === 'string' && data.message.includes("incorrect")) {
-                            $('#invalid' + formNumber).text(data.message);
-                            $('#correct' + formNumber).text("");
-                        } else {
-                            $('#invalid' + formNumber).text("");
-                            $('#correct' + formNumber).text(data.message);
+                        if (data.message && typeof data.message === 'string') {
+                            let statusColor = '#dc3545';
 
-                            // check for error redirection URL in the response
-                            if (data.redirect_url) {
-                                window.location.href = data.redirect_url;
+                            // handle incorrect attempt
+                            if (data.message == 'correct') {
+                                statusColor = '#28a745';
                             }
+
+                            // handle locked acount & blocked ip
+                            if (data.message == 'account lockout') {
+                                // get redirection url
+                                if (data.redirect_url)
+                                    window.location.href = data.redirect_url;
+                            }
+
+                            // update status element
+                            $('#status' + formNumber).text(data.message).css('color', statusColor);
                         }
+
                     }, 'json');
 
                     // Reset the form
