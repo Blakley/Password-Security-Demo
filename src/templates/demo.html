@@ -130,6 +130,17 @@
                                     </form>
 
                                     <p id="status3"></p>
+
+                                    <!-- Captcha area -->
+                                    <div class="captcha-area" style="display: none;">
+                                        <div id="captcha">
+                                            <img src="{{ url_for('static', filename='images/captcha/2b827.png') }}" id ="captcha-img" alt="CAPTCHA Image">
+                                        </div>
+                                        <form action="javascript:void(0);" method="post" id="captcha-form">
+                                            <input type="text" id="captcha_input" name="captcha_input" placeholder="Type the text above" required="required">
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -289,11 +300,19 @@
         <!-- form submission  -->
         <script>
             $(document).ready(function() {
+
+                // user login submission
                 $('.user-login-form').submit(function(event) {
                     event.preventDefault();
 
                     // extract the number from the form's ID
                     let formNumber = $(this).attr('id').replace('login-form-', '');
+
+                    // trigger captcha for login form 3
+                    if (formNumber == 3) {
+                        console.log('triggering captcha');
+                        $(".captcha-area").show();
+                    }
 
                     // construct the route dynamically
                     let route = '/login_' + formNumber;
@@ -321,9 +340,42 @@
 
                     }, 'json');
 
-                    // Reset the form
-                    this.reset();
+                    this.reset(); // reset input form
                 });
+
+                // captcha submission
+                $("#captcha_input").on("keyup", function(event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+
+                        // extract entered text
+                        let entered_text = $(this).val();
+
+                        // extract the filename of the CAPTCHA image
+                        let imageUrl = $("#captcha-img").attr("src");
+                        let filename = imageUrl.substring(imageUrl.lastIndexOf('/') + 1);
+
+                        // create an object to hold form data
+                        let formData = {
+                            captcha_input: entered_text,
+                            captcha_filename: filename
+                        };
+
+                        // submit captcha
+                        let route = '/captcha_submit';
+                        $.post(route, formData, function(data) {
+                            if (data.message && typeof data.message === 'string') {
+                                console.log('You entered: ' + data.message);
+
+                                // hide completed captcha
+                                $(".captcha-area").hide();
+                            }
+                        }, 'json');
+                        
+                        $(this).val(''); // reset input form    
+                    }
+                });
+
             });
         </script>
     </body>

@@ -172,6 +172,30 @@ def login(form_number):
     response_data = validate(username, password, form_number)
     return jsonify(response_data)
 
+'''
+    =======================================
+            Handle captcha submissions
+    =======================================
+'''
+
+# checks if the captcha is valid
+def captcha_check(value, file):
+    # initialize answer
+    result = {'message' : 'False'}
+    return jsonify(result) 
+
+
+# handle captcha submissions
+@app.route('/captcha_submit', methods=['POST'])
+def captcha():
+    # get captcha input
+    value = request.form['captcha_input']
+    file = request.form['captcha_filename']
+    return captcha_check(value, file)
+
+
+
+
 
 # start
 if __name__ == '__main__':
