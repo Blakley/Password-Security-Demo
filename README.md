@@ -26,8 +26,7 @@ This script is a useful script that provides a visual of how to monitor webserve
 
 ### proxies.py
 
-`proxies.py` is script that creates numerous [loopback interfaces](https://techhub.hpe.com/eginfolib/networking/docs/switches/common/15-18/5998-8158_bog/content/ch06s03.html#:~:text=A%20loopback%20interface%20is%20a,other%20switch%20interface%20is%20up.) that's used to mimic a proxy pool used to bypass
-rate limiting and ip blocking.
+`proxies.py` is script that creates numerous [loopback addresses](https://www.geeksforgeeks.org/what-is-a-loopback-address/) that's used to mimic a proxy pool used to bypass rate limiting and ip blocking.
 
 ## Deployment
 
