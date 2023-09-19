@@ -34,6 +34,6 @@ This script is a useful script that provides a visual of how to monitor webserve
 * You can test bruteforcing either login form by either using a tool like [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
 
 ### Todo
-* Implement Login Form 3 security: login captcha
-* Implement security for Login Forms 4, 5, and 6
+* Implement Login Form 4 security: Account locking & IP blocking
+* Implement visual display of Login Forms 5, and 6
 * Replace dummy text with researched text/topics

