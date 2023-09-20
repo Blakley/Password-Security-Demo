@@ -3,7 +3,7 @@
 An educational project showcasing brute forcing techniques and common mitigations. 
 
 <!-- ![login](src/static/images/screenshot.png) -->
-<img src="src/static/images/screenshot.png" alt="Alt Text" width="330" height="300">
+<img src="src/static/images/screenshot.png" alt="Alt Text" width="400" height="400">
 
 
 ## Dependenices
