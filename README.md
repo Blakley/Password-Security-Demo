@@ -2,6 +2,9 @@
 
 An educational project showcasing brute forcing techniques and common mitigations. 
 
+<!-- ![login](src/static/images/screenshot.png) -->
+<img src="src/static/images/screenshot.png" alt="Alt Text" width="330" height="300">
+
 
 ## Dependenices
 
@@ -33,7 +36,6 @@ This script is a useful script that provides a visual of how to monitor webserve
 * To start the server, execute the `server.py` file and navgiate to the [localhost url](http://127.0.0.1:5000/)
 * You can test bruteforcing either login form by either using a tool like [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
 
-### Todo
-* Implement Login Form 4 security: Account locking & IP blocking
-* Implement visual display of Login Forms 5, and 6
+## Todo
+* Implement Login Forms 5 (`MFA`), and 6 (`SSO`)
 * Replace dummy text with researched text/topics

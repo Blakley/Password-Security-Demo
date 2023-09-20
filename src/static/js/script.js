@@ -34,8 +34,8 @@ $(document).ready(function() {
                     statusColor = '#28a745';
                 }
 
-                // handle locked acount & blocked ip
-                if (data.message == 'account lockout') {
+                // handle blocked (blacklisted) ips
+                if (data.message == 'blocked') {
                     // get redirection url
                     if (data.redirect_url)
                         window.location.href = data.redirect_url;

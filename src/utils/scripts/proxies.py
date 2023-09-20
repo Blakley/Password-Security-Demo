@@ -36,18 +36,18 @@ class Proxy():
             self.remove()
 
 
-    # creates a list of 1000 private ip addresses
+    # creates a list of 1500 private ip addresses
     def config(self):
 
         # create private IP addresses
         for x, y, z in itertools.product(range(256), repeat=3):
             
-            # Add 10.x.y.z addresses up to 500 entries
-            if len(self.ip_addresses) < 500:
+            # Add 10.x.y.z addresses up to 1000 entries
+            if len(self.ip_addresses) < 1000:
                 self.ip_addresses.append(f'10.{x}.{y}.{z}')
             
-            # Add 172.16.x.y to 172.31.x.y addresses up to 1000 entries
-            elif len(self.ip_addresses) < 1000:
+            # Add 172.16.x.y to 172.31.x.y addresses up to 1500 entries
+            elif len(self.ip_addresses) < 1500:
                 self.ip_addresses.append(f'172.{16 + x}.{y}.{z}')
             else:
                 break
@@ -82,13 +82,13 @@ class Proxy():
 
         # handle linux and macOS(Darwin kernal) systems
         if platform.system() in ["Linux", "Darwin"]:
-            for i in range(0, 1000):
+            for i in range(0, 1500):
                 command = f'sudo ifconfig lo:{i} down'
                 subprocess.run(command, shell=True, check=True)
 
         # handle windows systems
         if platform.system() == "Windows":
-            for i in range(0, 1000):
+            for i in range(0, 1500):
                 alias = f"Loopback Pseudo-Interface 1:{i}"
                 command = f'powershell -Command "Remove-NetIPAddress -InterfaceAlias \'{alias}\'"'
                 subprocess.run(command, shell=True, check=True)

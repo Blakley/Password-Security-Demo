@@ -28,6 +28,12 @@ captcha_solved = False
 captcha_directory = 'static/images/captcha'
 captchas = [filename for filename in os.listdir(captcha_directory)]
 
+# setup lockout policy variables (store failed login attempts for each username)
+locked_attempts = {} 
+locked_accounts = []
+locked_threshold = 5
+
+
 '''
     =======================================
             Configure server logging
@@ -86,7 +92,7 @@ def demo():
 # 403 error page
 @app.route('/error')
 def error():
-    return render_template('403.html')
+    return render_template('error.html')
 
 '''
     =======================================
@@ -96,24 +102,30 @@ def error():
 
 # validate login credentials
 def validate(username, password, form_number):
-    
+    # construct response        
     response_data = {'message': 'incorrect'}
 
-    # look up credentials
+    # check credentials
     if form_number in credentials:
         expected_username, expected_password = credentials[form_number]
         if username == expected_username and password == expected_password:
             response_data = {'message': 'correct'}
+            
+            # reset consecutive failed attempts for user (login-form #4)
+            reset_attempts(username)
 
+    # check lockout policy (login-form #4)
+    if form_number == 4 and response_data['message'] == 'incorrect':
+        lockout(username)
+        
     return response_data
 
 
 # handle rating limiting
-def rate_limit(ip):
+def rate_limit(ip, rate=5):
     logs = 'login.log'
     
     # define the allowed attempts per minute
-    rate_limit_threshold = 5
     rate_limit_window = 60
 
     # calculate the time threshold (1 minute ago)
@@ -130,7 +142,7 @@ def rate_limit(ip):
                     attempts += 1
 
     # check if attempts exceeds threshold
-    if attempts >= rate_limit_threshold:
+    if attempts >= rate:
         print(f'Rate limit exceeded for client {ip}. Denied access.')
         return 'rate limited'
     
@@ -138,9 +150,10 @@ def rate_limit(ip):
 
 
 # handle login security
-def security(ip, form_number):
+def security(ip, form_number, username):
     # handle security for each login form
     global captcha_solved
+    global locked_accounts
 
     # [no security]
     if form_number == 1:
@@ -158,6 +171,12 @@ def security(ip, form_number):
         else:
             return 'invalid captcha'
         
+    # [account lockout]
+    if form_number == 4:
+        # check if account is locked
+        if username in locked_accounts:
+            return 'account lockout'
+        
     return 'True'
 
 
@@ -167,12 +186,12 @@ def login(form_number):
     # get form data
     username = request.form['username']
     password = request.form['password']
-
+    
     # get client's IP address
     client_address = request.remote_addr
     
     # handle login security
-    grant_acess = security(client_address, form_number)
+    grant_acess = security(client_address, form_number, username)
     
     # unauthorized access
     if grant_acess == 'rate limited':
@@ -182,14 +201,17 @@ def login(form_number):
     if grant_acess == 'invalid captcha':
         return jsonify({'message': 'Captcha error'})
 
-    # suspcious activity
+    # suspcious activity, account locked
+    if grant_acess == 'account lockout':
+        return jsonify({'message' : 'Your account is currently locked'})
+    
+    # suspcious activity, ip blocked
     if grant_acess == 'account lockout':
         return jsonify({
             'message' : grant_acess, 
             "redirect_url": "/error"
         })
-        
-        
+            
     # log request
     login_logger = logging.getLogger('login')
     login_logger.info(
@@ -251,7 +273,39 @@ def captcha():
     file = request.form['captcha_name']
     return check_captcha(value, file)
 
+'''
+    =======================================
+            Handle lockout policy
+    =======================================
+'''
 
+# reset consecutive failed attempts when login is successful
+def reset_attempts(username):
+    global locked_attempts
+    if username in locked_attempts:
+        locked_attempts[username] = 0    
+
+
+# handle account lockout mechanism
+def lockout(username):
+    global locked_attempts
+    global locked_accounts
+    global locked_threshold
+    
+    # increment login attempts for username
+    if username not in locked_attempts:
+        locked_attempts[username] = 1
+    else:
+        locked_attempts[username] += 1
+    
+    # check if the user has reached the lockout threshold
+    if locked_attempts[username] >= locked_threshold:
+        # add user to locked accounts
+        if username not in locked_accounts:
+            print(f'User: {username} is now locked')
+            locked_accounts.append(username)
+    
+            
 
 # start
 if __name__ == '__main__':
