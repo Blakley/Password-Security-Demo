@@ -34,6 +34,10 @@ locked_accounts = []
 locked_threshold = 5
 
 
+# setup IP blacklist
+black_listed = []
+
+
 '''
     =======================================
             Configure server logging
@@ -74,18 +78,36 @@ def log_filter(record):
 # home page
 @app.route('/')
 def home():
+    # redirect to error if IP is blacklisted : (form 4)
+    ip = request.remote_addr
+    if ip in black_listed:
+        print(f'[FORBIDDEN ACCESS] IP: {ip}')
+        return render_template('error.html')
+    
     return render_template('home.html')
 
 
 # learn page
 @app.route('/learn')
 def learn():
+    # redirect to error if IP is blacklisted : (form 4)
+    ip = request.remote_addr
+    if ip in black_listed:
+        print(f'[FORBIDDEN ACCESS] IP: {ip}')
+        return render_template('error.html')
+    
     return render_template('learn.html')
 
 
 # demo page
 @app.route('/demo')
 def demo():
+    # redirect to error if IP is blacklisted : (form 4)
+    ip = request.remote_addr
+    if ip in black_listed:
+        print(f'[FORBIDDEN ACCESS] IP: {ip}')
+        return render_template('error.html')
+    
     return render_template('demo.html')
 
 
@@ -154,6 +176,7 @@ def security(ip, form_number, username):
     # handle security for each login form
     global captcha_solved
     global locked_accounts
+    global black_listed
 
     # [no security]
     if form_number == 1:
@@ -171,8 +194,12 @@ def security(ip, form_number, username):
         else:
             return 'invalid captcha'
         
-    # [account lockout]
     if form_number == 4:
+        # add IP to blacklist, user trying to access locked acount
+        if (rate_limit(ip, 10) == 'rate limited'):
+            black_listed.append(ip)
+            return 'IP blacklisted'
+        
         # check if account is locked
         if username in locked_accounts:
             return 'account lockout'
@@ -182,7 +209,7 @@ def security(ip, form_number, username):
 
 # handle login submission
 @app.route('/login_<int:form_number>', methods=['POST'])
-def login(form_number):
+def login(form_number):    
     # get form data
     username = request.form['username']
     password = request.form['password']
@@ -205,13 +232,10 @@ def login(form_number):
     if grant_acess == 'account lockout':
         return jsonify({'message' : 'Your account is currently locked'})
     
-    # suspcious activity, ip blocked
-    if grant_acess == 'account lockout':
-        return jsonify({
-            'message' : grant_acess, 
-            "redirect_url": "/error"
-        })
-            
+    # suspcious activity, IP blacklisted
+    if grant_acess == 'IP blacklisted':
+        return jsonify({'message' : 'Forbidden, blacklisted'}) 
+                
     # log request
     login_logger = logging.getLogger('login')
     login_logger.info(
@@ -268,6 +292,8 @@ def check_captcha(value, file):
 # handle captcha submissions
 @app.route('/captcha_submit', methods=['POST'])
 def captcha():
+    # Notes, recaptcha makes the challenge expire in 2minutes
+    
     # get captcha input
     value = request.form['captcha_input']
     file = request.form['captcha_name']
@@ -306,7 +332,6 @@ def lockout(username):
             locked_accounts.append(username)
     
             
-
 # start
 if __name__ == '__main__':
     # setup logging & start server

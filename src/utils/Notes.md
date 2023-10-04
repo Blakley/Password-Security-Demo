@@ -33,3 +33,8 @@ Script demonstrating how attackers bruteforce credentials on the login demo foru
 ### proxies.py
 This script creates virtual ip addresses on the computer which act like
 proxies to allow bypassing rate limit & IP blocking bruteforcing 
+
+## Sources
+
+https://www.cobalt.io/blog/bypassing-the-protections-mfa-bypass-techniques-for-the-win (MFA bypass Form 5)
+

