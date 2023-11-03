@@ -1,4 +1,3 @@
-
 # imports
 import os
 import random
@@ -9,12 +8,11 @@ from markupsafe import escape
 from datetime import datetime, timedelta
 from flask import Flask, request, render_template, jsonify, url_for, redirect, make_response
 
-
 # make flask instance
 app = Flask(__name__)  
 
 # setup login form credentials
-passwords = [line.strip() for line in open('utils/scripts/passwords', 'r')]
+passwords = [line.strip() for line in open('utils/passwords', 'r')]
 credentials = {
     1: ('admin@secure.com', random.choice(passwords)),
     2: ('admin@secure.com', random.choice(passwords)),
@@ -57,7 +55,7 @@ def loggging():
 
     # logs to a file
     login_logger = logging.getLogger('login')
-    login_handler = logging.FileHandler('login.log') 
+    login_handler = logging.FileHandler('utils/login.log') 
     login_handler.setLevel(logging.INFO)
     login_formatter = logging.Formatter('%(asctime)s - %(message)s')
     login_handler.setFormatter(login_formatter)
@@ -145,7 +143,7 @@ def validate(username, password, form_number):
 
 # handle rating limiting
 def rate_limit(ip, rate=5):
-    logs = 'login.log'
+    logs = 'utils/login.log'
     
     # define the allowed attempts per minute
     rate_limit_window = 60
@@ -193,7 +191,8 @@ def security(ip, form_number, username):
             captcha_solved = False
         else:
             return 'invalid captcha'
-        
+    
+    # [blacklist & account lockout]
     if form_number == 4:
         # add IP to blacklist, user trying to access locked acount
         if (rate_limit(ip, 10) == 'rate limited'):
@@ -290,10 +289,8 @@ def check_captcha(value, file):
 
 
 # handle captcha submissions
-@app.route('/captcha_submit', methods=['POST'])
-def captcha():
-    # Notes, recaptcha makes the challenge expire in 2minutes
-    
+@app.route('/captcha_submit',  methods=['POST'])
+def captcha():    
     # get captcha input
     value = request.form['captcha_input']
     file = request.form['captcha_name']

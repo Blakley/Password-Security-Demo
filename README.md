@@ -1,10 +1,9 @@
 # Password Bruteforcing Demo
 
-An educational project showcasing brute forcing techniques and common mitigations. 
+An educational project showcasing password bruteforcing techniques and prevention. 
 
 <!-- ![login](src/static/images/screenshot.png) -->
 <img src="src/static/images/screenshot.png" alt="Alt Text" width="400" height="400">
-
 
 ## Dependenices
 
@@ -20,22 +19,24 @@ Provided below is a general overview of each script file.
 
 ### attack.py
 
-`attack.py` is a password bruteforcing script that attempts to figure out the login credentials for each login form.
+`attack.py` is a password bruteforcing script that attempts to bypass the security
+implementation for each login form.
 
 ### monitor.py
 
-`monitor.py` is a script file that will continually monitor updates to the `login.log` file, which shows the login attempts to each login form.
-This script is a useful script that provides a visual of how to monitor webserver logs
+`monitor.py` is a script file that will continually monitor updates to the __login.log__ file, which shows the login attempts to each login form.
 
 ### proxies.py
 
-`proxies.py` is script that creates numerous [loopback addresses](https://www.geeksforgeeks.org/what-is-a-loopback-address/) that's used to mimic a proxy pool used to bypass rate limiting and ip blocking.
+`proxies.py` is script that creates numerous [private ips](https://whatismyipaddress.com/private-ip#private-ip) that's used to mimic a proxy pool we'll
+use to bypass rate limiting and ip blocking.
 
 ## Deployment
 
-* To start the server, execute the `server.py` file and navgiate to the [localhost url](http://127.0.0.1:5000/)
-* You can test bruteforcing either login form by either using a tool like [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
+* To start the server, execute the `server.py` file and navgiate to the [server url](http://127.0.0.1:5000/).
+
+* You can test the security of the login forms via: [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
 
 ## Todo
 * Implement Login Forms 5 (`MFA`), and 6 (`SSO`)
-* Replace dummy text with researched text/topics
+* Replace placeholder with researched text/topics

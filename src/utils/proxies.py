@@ -3,9 +3,8 @@ import platform
 import itertools
 import subprocess
 
-
 '''
-    Creates numerous loopback interfaces (mimic proxy server)
+    Creates numerous private interfaces (mimic proxy server)
     stores the 'proxies' in a proxies file which is used for
     bypassing rate limiting
 '''
@@ -13,6 +12,7 @@ class Proxy():
     def __init__(self):
         # list of virtual ips
         self.ip_addresses = []
+        self.ip_amount = 1500;
         self.setup()
 
 
@@ -38,8 +38,13 @@ class Proxy():
 
     # creates a list of 1500 private ip addresses
     def config(self):
+        '''
+            192.168.0.0 - 192.168.255.255 (65,536 IP addresses)
+            172.16.0.0  - 172.31.255.255 (1,048,576 IP addresses)
+            10.0.0.0    - 10.255.255.255 (16,777,216 IP addresses)
+        '''
 
-        # create private IP addresses
+        # create 1500 private IP addresses
         for x, y, z in itertools.product(range(256), repeat=3):
             
             # Add 10.x.y.z addresses up to 1000 entries
@@ -47,7 +52,7 @@ class Proxy():
                 self.ip_addresses.append(f'10.{x}.{y}.{z}')
             
             # Add 172.16.x.y to 172.31.x.y addresses up to 1500 entries
-            elif len(self.ip_addresses) < 1500:
+            elif len(self.ip_addresses) < self.ip_amount:
                 self.ip_addresses.append(f'172.{16 + x}.{y}.{z}')
             else:
                 break
@@ -62,6 +67,7 @@ class Proxy():
         # handle linux and macOS(Darwin kernal) systems
         if platform.system() in ['Linux', 'Darwin']:
 
+            # configure the private IP addresses on network interface aliases
             for i, ip in enumerate(self.ip_addresses):
                 alias = f'lo:{i}'
                 command = f'sudo ifconfig {alias} {ip} netmask 255.255.255.0 up'
@@ -82,13 +88,13 @@ class Proxy():
 
         # handle linux and macOS(Darwin kernal) systems
         if platform.system() in ["Linux", "Darwin"]:
-            for i in range(0, 1500):
+            for i in range(0, self.ip_amount):
                 command = f'sudo ifconfig lo:{i} down'
                 subprocess.run(command, shell=True, check=True)
 
         # handle windows systems
         if platform.system() == "Windows":
-            for i in range(0, 1500):
+            for i in range(0, self.ip_amount):
                 alias = f"Loopback Pseudo-Interface 1:{i}"
                 command = f'powershell -Command "Remove-NetIPAddress -InterfaceAlias \'{alias}\'"'
                 subprocess.run(command, shell=True, check=True)

@@ -7,11 +7,9 @@ import http.client
 import urllib.parse
 from termcolor import colored
 
-
 '''
 	Login form bruteforce class:
-		each login form has implements different techniques
-		to evade the implemented login form security
+		Attempts to evade the implemented security for each login form
 '''
 class Attack():
 	def __init__(self):
@@ -91,7 +89,7 @@ class Attack():
   
 		# rotate proxies
 		for proxy in self.proxies:
-			# use current proxy 4 times
+			# use current IP address 4 times
 			for _ in range(4):
 				password = self.passwords[index] 
 				data = f'username={self.username}&password={password}'
@@ -228,6 +226,11 @@ class Attack():
 
 	# attack login form #5
 	def form_5(self):
+		pass
+
+
+	# attack login form #6
+	def form_6(self):
 		pass
 
 

@@ -1,3 +1,4 @@
+// client-side script
 $(document).ready(function() {
 
     // generates a captcha

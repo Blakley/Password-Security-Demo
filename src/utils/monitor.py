@@ -3,14 +3,13 @@ import os
 import time
 import platform
 
-
 '''
-    Monitors the clients.log file for changes 
-    the file is updated whenever a login forum is submitted
+    Monitors the login.log file for changes 
+    the file is updated whenever a login form is submitted
 '''
 class Monitor(object):
     def __init__(self):
-        self.output_log = '../../login.log'
+        self.output_log = 'login.log'
         self.monitor()
 
     # capture new traffic
@@ -18,6 +17,7 @@ class Monitor(object):
         previous_time = 0
 
         while True:
+            # get last modification time of the file
             current_time = os.path.getmtime(self.output_log)
             
             if current_time != previous_time:
@@ -25,7 +25,8 @@ class Monitor(object):
                 if platform.system() == 'Windows':
                     os.system('cls') 
                 else:
-                    os.system('clear')
+                    # clears screen for linux and macOS
+                    print("\033c", end="")
                 
                 # print file content
                 with open(self.output_log, 'r') as file:
