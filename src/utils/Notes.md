@@ -40,5 +40,24 @@ proxies to allow bypassing rate limit & IP blocking bruteforcing.
 ## Implement Login 5 demo & attack
 https://www.cobalt.io/blog/bypassing-the-protections-mfa-bypass-techniques-for-the-win (MFA bypass Form 5)
 
+1. Implement a normal SSO login that requires the user to verify the login credential 
+2. There will be a 4 digit code sent back (without rate limiting), allowing the attacker to bypass
+
 ## Implement Login 6 demo & attack 
 https://systemweakness.com/the-story-of-how-i-bypass-sso-login-6b93370196cf
+
+1. 
+   use HTTP Response Status Code Manipulation
+2. 
+   The application relies upon checking the HTTP Response Status Code for proceeding further, 
+   it is possible to manipulate the response code and bypass the restriction.
+
+    Original Response:
+        403 Forbidden
+        <redacted>
+        {"error":true, "message":"Invalid Token"}
+
+    Modified Response — Status Code(with same wrong OTP):
+        200 OK
+        <redacted>
+        {"success":true}
