@@ -57,7 +57,7 @@ https://systemweakness.com/the-story-of-how-i-bypass-sso-login-6b93370196cf
         <redacted>
         {"error":true, "message":"Invalid Token"}
 
-    Modified Response — Status Code(with same wrong OTP):
+    Modified Response — Status Code(with same wrong OTP [one time password]):
         200 OK
         <redacted>
         {"success":true}
