@@ -202,7 +202,7 @@ def security(ip, form_number, username):
         # check if account is locked
         if username in locked_accounts:
             return 'account lockout'
-        
+
     return 'True'
 
 

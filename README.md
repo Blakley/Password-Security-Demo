@@ -36,7 +36,3 @@ use to bypass rate limiting and ip blocking.
 * To start the server, execute the `server.py` file and navgiate to the [server url](http://127.0.0.1:5000/).
 
 * You can test the security of the login forms via: [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
-
-## Todo
-* Implement Login Forms 5 (`MFA`), and 6 (`SSO`)
-* Replace placeholder with researched text/topics

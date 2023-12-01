@@ -224,16 +224,6 @@ class Attack():
 			print(f'\n{c} : user {user}')
 
 
-	# attack login form #5
-	def form_5(self):
-		pass
-
-
-	# attack login form #6
-	def form_6(self):
-		pass
-
-
 # start
 if __name__ == '__main__':
 	attack = Attack()
