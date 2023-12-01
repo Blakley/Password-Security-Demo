@@ -2,9 +2,9 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Demo</title>
+        <title>Password Security</title>
 
-        <!--  -->
+        <!-- Resource files  -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -12,16 +12,16 @@
 
     <body id="body">
         
-        <!-- -->
+        <!-- Navigation menu -->
         <header class="navigation">
             <div class="container">
                 <nav class="navbar navbar-expand-lg p-0">
-                  <!--  -->
+                   <!-- Page name -->
                   <a class="navbar-brand" href="/">
-                        Demo
+                        Bruteforce | Mitigation
                   </a>
 
-                  <!--  -->
+                  <!-- Navigation pages -->
                   <div class="collapse navbar-collapse ml-auto">
                       <ul class="navbar-nav ml-auto">
                           <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
@@ -33,15 +33,15 @@
             </div>
         </header>
 
-        <!--  -->
+        <!-- Header Text -->
         <section class="page-title bg-1">
           <div class="container">
               <div class="row">
                   <div class="col-md-12">
                       <div class="block">
-                          <h1 class="animated fadeInUp">Lorem ipsum</h1>
+                          <h1 class="animated fadeInUp">Login Security Information</h1>
                           <p class="animated fadeInUp">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing
+                            Empower Yourself with Essential Knowledge: Explore Best Practices and Proven Strategies for Robust Login Security
                           </p>
                       </div>
                   </div>
@@ -49,7 +49,7 @@
           </div>
         </section>
 
-        <!--  -->
+        <!-- Techniques -->
         <div class="page-wrapper">
             <div class="container">
                 <div class="row justify-content-center">
@@ -63,9 +63,14 @@
                             <h3 class="post-title"><a>Rate limiting</a></h3>
                             <div class="post-content">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit vitae placeat ad architecto nostrum asperiores vel aperiam, veniam eum nulla. Maxime cum magnam, adipisci architecto quibusdam cumque veniam
-                                    fugiat quae. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio vitae ab doloremque accusamus sit, eos dolorum officiis a perspiciatis aliquid. Lorem ipsum dolor sit amet, consectetur
-                                    adipisicing elit. Quod, facere.
+                                    Rate limiting is a security measure that restricts the number of login attempts 
+                                    within a specified timeframe. By setting a limit on the number of requests a user 
+                                    or IP address can make, it mitigates the risk of brute-force attacks. 
+                                    Implementation involves configuring your server to track and limit login requests. 
+                                    While rate limiting strengthens security, it's crucial to strike a balance to 
+                                    avoid inconveniencing legitimate users who may exceed normal login attempts.
+                                    For more information, visit the page: 
+                                    <a href="https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks">OWASP | Blocking Brute Force Attacks</a>
                                 </p>
                             </div>
                         </div>
@@ -78,9 +83,12 @@
                             <h3 class="post-title"><a>Captcha</a></h3>
                             <div class="post-content">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit vitae placeat ad architecto nostrum asperiores vel aperiam, veniam eum nulla. Maxime cum magnam, adipisci architecto quibusdam cumque veniam
-                                    fugiat quae. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio vitae ab doloremque accusamus sit, eos dolorum officiis a perspiciatis aliquid. Lorem ipsum dolor sit amet, consectetur
-                                    adipisicing elit. Quod, facere.
+                                    Captchas are challenges designed to distinguish between human and automated access. 
+                                    Typically presented as distorted characters or images, users must prove they are human by solving these puzzles. 
+                                    The implementation of captchas involves integrating them into the login process. 
+                                    Captchas effectively protect against automated bots but may pose usability challenges for some users, 
+                                    such as those with visual impairments. For more information, visit the page:
+                                    <a href="https://www.cloudflare.com/learning/bots/how-captchas-work/#:~:text=What%20is%20a%20CAPTCHA%3F,reCAPTCHA%20tests%20on%20the%20Internet.">CLOUDFLARE | How CAPTCHAs work</a>
                                 </p>
                             </div>
                         </div>
@@ -93,39 +101,56 @@
                           <h3 class="post-title"><a>Account lockout & IP blocking</a></h3>
                           <div class="post-content">
                               <p>
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit vitae placeat ad architecto nostrum asperiores vel aperiam, veniam eum nulla. Maxime cum magnam, adipisci architecto quibusdam cumque veniam
-                                  fugiat quae. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio vitae ab doloremque accusamus sit, eos dolorum officiis a perspiciatis aliquid. Lorem ipsum dolor sit amet, consectetur
-                                  adipisicing elit. Quod, facere.
+                                Account lockout is a security feature that temporarily locks a user's account after a certain number 
+                                of unsuccessful login attempts. This hinders brute-force attacks by discouraging repeated guesses. 
+                                The implementation includes setting thresholds for unsuccessful attempts and defining lockout durations. 
+                                While account lockout enhances security, it may inadvertently lock out legitimate users if 
+                                the threshold is set too low. IP blacklisting involves blocking specific IP addresses or ranges known for 
+                                malicious activity. It is implemented by maintaining a list of undesirable IPs and configuring the server 
+                                to deny access to requests originating from those addresses. IP blacklisting is effective against known threats but 
+                                may lead to false positives and block legitimate users if not managed carefully.
+                                For more information, visit the page:
+                                <a href="https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks">OWASP | Blocking Brute Force Attacks</a>
                               </p>
                           </div>
                         </div>
                       
-                        <!-- (MFA) using SMS -->
+                        <!-- (MFA)  -->
                         <div class="post">
                             <div class="post-media post-thumb">
                                 <img src="{{ url_for('static', filename='images/code.jpg') }}" alt="">
                             </div>
-                            <h3 class="post-title"><a>(MFA) using SMS</a></h3>
+                            <h3 class="post-title"><a>Multi-Factor Authentication (MFA)</a></h3>
                             <div class="post-content">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit vitae placeat ad architecto nostrum asperiores vel aperiam, veniam eum nulla. Maxime cum magnam, adipisci architecto quibusdam cumque veniam
-                                    fugiat quae. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio vitae ab doloremque accusamus sit, eos dolorum officiis a perspiciatis aliquid. Lorem ipsum dolor sit amet, consectetur
-                                    adipisicing elit. Quod, facere.
+                                    Multi-Factor Authentication adds an extra layer of security by requiring users to verify their 
+                                    identity using two or more authentication methods. Common factors include something the user knows (password), 
+                                    something they have (mobile device), or something they are (biometrics). 
+                                    Implementation involves integrating MFA protocols into the login process. 
+                                    MFA significantly enhances security but may slightly increase user friction during login.
+                                    For more information, visit the page:
+                                    <a href="https://cheatsheetseries.owasp.org/cheatsheets/Multifactor_Authentication_Cheat_Sheet.html">OWASP | Multi-Factor Authentication Cheat Sheet</a>
                                 </p>
                             </div>
                         </div>
 
-                        <!-- SSO Provider (Google Login) -->
+                        <!-- SSO Providers -->
                         <div class="post">
                           <div class="post-media post-thumb">
                               <img src="{{ url_for('static', filename='images/code.jpg') }}" alt="">
                           </div>
-                          <h3 class="post-title"><a>SSO Provider (Google Login)</a></h3>
+                          <h3 class="post-title"><a>SSO Providers</a></h3>
                           <div class="post-content">
                               <p>
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit vitae placeat ad architecto nostrum asperiores vel aperiam, veniam eum nulla. Maxime cum magnam, adipisci architecto quibusdam cumque veniam
-                                  fugiat quae. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio vitae ab doloremque accusamus sit, eos dolorum officiis a perspiciatis aliquid. Lorem ipsum dolor sit amet, consectetur
-                                  adipisicing elit. Quod, facere.
+                                Single Sign-On (SSO) is a convenient authentication method that allows users to access multiple applications 
+                                or services with a single set of login credentials. Utilizing SSO providers like Google streamlines the 
+                                login experience, as users can use their existing Google accounts to access your website. 
+                                Implementation involves integrating with the chosen SSO provider's authentication system. 
+                                SSO enhances user convenience, reduces password fatigue, and simplifies account management. 
+                                However, relying on external SSO providers means placing trust in their security measures. 
+                                It's essential to carefully configure the integration to ensure a seamless and secure login experience for your users.
+                                For more information, visit the page:
+                                <a href="https://owasp.org/www-pdf-archive/OWASP-Single-Sign-On-Vijay.pdf">OWASP | Single Sign-On</a>
                               </p>
                           </div>
                         </div>
@@ -138,9 +163,17 @@
                             <h3 class="post-title"><a>Our Personal Thoughts</a></h3>
                             <div class="post-content">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit vitae placeat ad architecto nostrum asperiores vel aperiam, veniam eum nulla. Maxime cum magnam, adipisci architecto quibusdam cumque veniam
-                                    fugiat quae. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio vitae ab doloremque accusamus sit, eos dolorum officiis a perspiciatis aliquid. Lorem ipsum dolor sit amet, consectetur
-                                    adipisicing elit. Quod, facere.
+                                    In our view, a robust defense against password brute-force attacks involves implementing a 
+                                    combination of proven mitigation techniques. Rate limiting, by restricting the number of login 
+                                    attempts within a defined timeframe, serves as an effective deterrent to brute-force attacks. 
+                                    Additionally, incorporating CAPTCHAs adds an extra layer of security by requiring users to prove 
+                                    they are human before attempting a login. Account lockout and IP blacklisting provide further safeguards, 
+                                    preventing repeated unauthorized access attempts. Multi-Factor Authentication (MFA), particularly using SMS 
+                                    verification, adds an additional level of security by requiring users to verify their identity through 
+                                    a secondary method. Finally, integrating Single Sign-On (SSO) providers like Google not only simplifies 
+                                    user access but also leverages the security measures implemented by trusted external services. 
+                                    Embracing a multifaceted approach ensures a robust defense against password brute-force attempts, 
+                                    striking a balance between user convenience and stringent security practices.
                                 </p>
                             </div>
                         </div>
@@ -150,21 +183,21 @@
             </div>
         </div>
 
-        <!--  -->
+        <!-- Website footer -->
         <footer class="footer">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <p class="copyright mb-0">
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit <br>
-                          Lorem ipsum <a href="">consectetur adipisicing elit</a>
+                            Empowering You with Secure Online Experiences <br>
+                            Learn, Explore, and  <a href="">Stay Protected</a>
                         </p>
                     </div>
                 </div>
             </div>
         </footer>
 
-        <!--  -->
+        <!-- Script files -->
         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     </body>

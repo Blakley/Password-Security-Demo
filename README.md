@@ -28,8 +28,7 @@ implementation for each login form.
 
 ### proxies.py
 
-`proxies.py` is script that creates numerous [private ips](https://whatismyipaddress.com/private-ip#private-ip) that's used to mimic a proxy pool we'll
-use to bypass rate limiting and ip blocking.
+`proxies.py` is script that creates numerous [private ips](https://whatismyipaddress.com/private-ip#private-ip) that's used to mimic a proxy pool we'll use to bypass rate limiting and ip blocking.
 
 ## Deployment
 
