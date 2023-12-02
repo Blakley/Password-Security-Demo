@@ -2,9 +2,9 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Demo</title>
+        <title>Password Security</title>
 
-        <!--  -->
+        <!-- Resource files  -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -12,16 +12,16 @@
 
     <body id="body">
 
-        <!-- -->
+        <!-- Navigation menu -->
         <header class="navigation">
             <div class="container">
                 <nav class="navbar navbar-expand-lg p-0">
-                  <!--  -->
+                  <!-- Page name -->
                   <a class="navbar-brand" href="/">
-                        Demo
+                    Bruteforce | Prevention
                   </a>
 
-                  <!--  -->
+                  <!-- Navigation pages -->
                   <div class="collapse navbar-collapse ml-auto">
                       <ul class="navbar-nav ml-auto">
                           <li class="nav-item active"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
@@ -33,18 +33,18 @@
             </div>
         </header>
 
-        <!-- -->
+        <!-- Header Text -->
         <section class="slider">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="block">
                             <h1 class="animated fadeInUp">
-                                Password Security<br>Demo
+                                Password Security
                             </h1>
                             <p class="animated fadeInUp">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt<br>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit
+                                This website is dedicated to educating users on effective password security 
+                                practices and implementing advanced measures to safeguard against unauthorized access
                             </p>
                         </div>
                     </div>
@@ -52,16 +52,17 @@
             </div>
         </section>
 
-        <!-- -->
+        <!-- Topics Preview -->
         <section class="service">
             <div class="container">
 
                 <div class="row">
                     <div class="col-12 text-center">
                         <div class="section-title">
-                            <h2>Mitigations</h2>
+                            <h2>About</h2>
                             <p>
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                                Our website delves into crucial topics geared towards ensuring your services are 
+                                protected against password bruteforcing attacks
                             </p>
                         </div>
                     </div>
@@ -73,7 +74,7 @@
                         <div class="service-item">
                             <i class="icon ion-coffee"></i>
                             <h4>Rate Limiting &<br>Account lockout</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                            <p>Mitigate brute-force attacks by restricting the number of login attempts within a specified time frame.</p>
                         </div>
                     </div>
 
@@ -82,7 +83,7 @@
                         <div class="service-item">
                             <i class="ion-compass"></i>
                             <h4>Captcha</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                            <p>Enhance security by verifying user humanity through challenges that are difficult for automated systems to solve.</p>
                         </div>
                     </div>
 
@@ -91,7 +92,7 @@
                         <div class="service-item">
                             <i class="ion-image"></i>
                             <h4>Multi-Factor Authentication</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                            <p>Elevate security with an additional layer of verification, typically involving a code sent via SMS, enhancing user identity validation.</p>
                         </div>
                     </div>
 
@@ -100,7 +101,7 @@
                         <div class="service-item">
                             <i class="ion-bug"></i>
                             <h4>Single Sign-On (SSO)</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+                            <p>Simplify user access while leveraging the security measures of trusted external services, streamlining authentication with established platforms like Google.</p>
                         </div>
                     </div>
                 </div>
@@ -108,21 +109,21 @@
             </div>
         </section>
         
-        <!-- -->
+        <!-- Website footer -->
         <footer class="footer">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <p class="copyright mb-0">
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit <br>
-                          Lorem ipsum <a href="">consectetur adipisicing elit</a>
+                            Empowering You with Secure Online Experiences <br>
+                            Learn, Explore, and  <a href="">Stay Protected</a>
                         </p>
                     </div>
                 </div>
             </div>
         </footer>
 
-        <!-- -->
+        <!-- Script files -->
         <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     </body>
