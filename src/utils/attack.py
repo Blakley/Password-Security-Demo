@@ -32,7 +32,7 @@ class Attack():
 	def select(self):
 
 		# get login form and username
-		route = input('Login form number [1, 5]: ')
+		route = input('Login form number [1, 4]: ')
 		self.username = input('Username to attack: ')
 		self.url = f'{self.url}/login_{route}'
 
@@ -48,9 +48,6 @@ class Attack():
 
 		if route == '4':
 			self.form_4()
-
-		if route == '5':
-			self.form_5()
 
 
 	# attack login form #1
