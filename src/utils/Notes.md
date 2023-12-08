@@ -32,3 +32,8 @@ Script demonstrating how attackers bruteforce credentials on the login demo form
 ### proxies.py
 This script creates private ip addresses on the computer which act like
 proxies to allow bypassing rate limit & IP blocking bruteforcing.
+
+Now that we've reviewed and detailed rate-limiting, captchas, account lockoouts, sso, and
+MFA.. we're going to review several login forms and showcase potential brute forcing
+techniques and mitgations as a result of not effienciely implemented these types of technologies
+
