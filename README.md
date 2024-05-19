@@ -3,7 +3,7 @@
 An educational project showcasing password bruteforcing techniques and prevention.
 
 <!-- ![login](src/static/images/screenshot.png) -->
-<img src="src/static/images/screenshot.png" alt="Alt Text" width="400" height="400">
+<img src="old_src/static/images/screenshot.png" alt="Alt Text" width="400" height="400">
 
 ## Dependenices
 
