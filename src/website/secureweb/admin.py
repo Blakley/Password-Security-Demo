@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import Credentials
 
-# Register your models here.
+# =====================
+# Configure admin page
+# =====================
+
+# register Credentials Table
+admin.site.register(Credentials)
+
