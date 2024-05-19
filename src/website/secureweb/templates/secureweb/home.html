@@ -1,0 +1,148 @@
+{% load static %}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>SecureWeb</title>
+
+        <!-- Resource files -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+        <!-- Footer update -->
+        <style>
+            html, body {
+              min-height: 100vh;
+            }
+        
+            body {
+              display: flex;
+              flex-direction: column;
+              min-height: 100vh;
+            }
+        
+            main {
+              flex-grow: 1;
+            }
+        
+            footer {
+              margin-top: auto;
+            }
+          </style>
+    
+    </head>
+
+    <body id="body">
+
+        <!-- Navigation menu -->
+        <header class="navigation">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg p-0">
+                  <!-- Page name -->
+                  <a class="navbar-brand" href="">
+                    Web Application Security
+                  </a>
+
+                  <!-- Navigation pages -->
+                  <div class="collapse navbar-collapse ml-auto">
+                      <ul class="navbar-nav ml-auto">
+                          <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                          <li class="nav-item"><a class="nav-link" href="{% url 'playground' %}">Playground</a></li>
+                      </ul>
+                  </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Header Text -->
+        <section class="slider">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <h1 class="animated fadeInUp">
+                                Secure Web
+                            </h1>
+                            <p class="animated fadeInUp">
+                                This website is dedicated to showcasing web-app security attacks 
+                                and corresponding measures to safeguard against those attacks
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topics Preview -->
+        <section class="service">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="section-title">
+                            <h2>Topics</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Rate limiting, Account lockout, IP blocking -->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <i class="icon ion-coffee"></i>
+                            <h4>Rate Limiting &<br>Account lockout</h4>
+                            <p>Mitigate bruteforce attacks by restricting the number of login attempts within a specified time frame</p>
+                        </div>
+                    </div>
+
+                    <!-- Captcha services -->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <i class="ion-compass"></i>
+                            <h4>Captcha</h4>
+                            <p>Enhance security by verifying user humanity through challenges</p>
+                        </div>
+                    </div>
+
+                    <!--Multi-Factor Authentication (MFA)-->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <i class="ion-image"></i>
+                            <h4>Multi-Factor Authentication</h4>
+                            <p>Elevate security with an additional layer of verification</p>
+                        </div>
+                    </div>
+
+                    <!-- SQL Database Security -->
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <i class="ion-bug"></i>
+                            <h4>SQL Database Security</h4>
+                            <p>Properly secure and configure SQL and NoSQL databases to protect against SQL Injection attacks</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <!-- Website footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="copyright mb-0">
+                            <a href="">SecureWeb</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Script files -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    </body>
+</html>
+
