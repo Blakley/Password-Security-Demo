@@ -1,6 +1,6 @@
 # Password Bruteforcing Demo
 
-An educational project showcasing password bruteforcing techniques and prevention. 
+An educational project showcasing password bruteforcing techniques and prevention.
 
 <!-- ![login](src/static/images/screenshot.png) -->
 <img src="src/static/images/screenshot.png" alt="Alt Text" width="400" height="400">
@@ -8,6 +8,7 @@ An educational project showcasing password bruteforcing techniques and preventio
 ## Dependenices
 
 Have Python3 installed and use pip to install the following:
+
 ```
     pip install Flask
     pip install termcolor
@@ -24,7 +25,7 @@ implementation for each login form.
 
 ### monitor.py
 
-`monitor.py` is a script file that will continually monitor updates to the __login.log__ file, which shows the login attempts to each login form.
+`monitor.py` is a script file that will continually monitor updates to the **login.log** file, which shows the login attempts to each login form.
 
 ### proxies.py
 
@@ -32,6 +33,10 @@ implementation for each login form.
 
 ## Deployment
 
-* To start the server, execute the `server.py` file and navgiate to the [server url](http://127.0.0.1:5000/).
+- To start the server, execute the `server.py` file and navgiate to the [server url](http://127.0.0.1:5000/).
 
-* You can test the security of the login forms via: [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
+- You can test the security of the login forms via: [Burp Suite](https://portswigger.net/burp), [John the Ripper](https://github.com/openwall/john), or by running the `attack.py` file as explained above.
+
+## SecureWeb
+
+- Project renaming
