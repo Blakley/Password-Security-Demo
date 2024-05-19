@@ -1,0 +1,247 @@
+{% load static %}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>SecureWeb - Playground</title>
+
+        <!-- Resource files -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <!-- page/footer updates -->
+        <style>
+            html, body {
+                min-height: 100vh;
+            }
+        
+            body {
+                display: flex;
+                flex-direction: column;
+                min-height: 100vh;
+                background: whitesmoke;
+            }
+        
+            main {
+                flex-grow: 1;
+            }
+        
+            footer {
+                margin-top: auto;
+            }
+        </style>
+            
+    </head>
+
+    <body id="body">
+
+        <!-- Navigation menu -->
+        <header class="navigation">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg p-0">
+                  <!-- Page name -->
+                  <a class="navbar-brand" href="">
+                        Playground
+                  </a>
+
+                  <!-- Navigation pages -->
+                  <div class="collapse navbar-collapse ml-auto">
+                      <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                        <li class="nav-item active"><a class="nav-link" href="{% url 'playground' %}">Playground</a></li>
+                      </ul>
+                  </div>
+                </nav>
+            </div>
+        </header>
+
+		<!-- Header Text -->
+        <section class="page-title bg-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <h1 class="animated fadeInUp">Login Security Playground</h1>
+                            <p class="animated fadeInUp">
+                                Explore Vulnerabilities: A Hands-On Demonstration of Login Security Risks  
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+		<!-- Login forms -->
+        <section class="login-table section bg-gray">
+            <div class="container">
+                <div class="tabs text-center">
+                    <!-- Form navigation -->
+                    <nav class="tab-list">
+                        <a class="tab active" href="#one">Login 1</a>
+                        <a class="tab" href="#two">Login 2</a>
+                        <a class="tab" href="#three">Login 3</a>
+                        <a class="tab" href="#four">Login 4</a>
+                    </nav>
+                    
+                    <!-- login form #1 -->
+                    <div id="one" class="tab-content show">
+                        <div class="col-md-0 login-form">
+                            <div class="login-item">
+                                <div class="login-title">
+                                    <p3 class="animated fadeInUp">
+                                        If you don't have an account, you can't login. 
+                                        Contact <strong>admin@secureweb.com</strong> for more information.
+                                        </br>
+                                    </p3>
+                                    <strong class="value animated fadeInUp">Login</strong>
+
+                                    <form id="login-form-1" class="user-login-form form" action="/login" method="post" autocomplete="off">                 
+                                        
+                                        <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
+                                        <input class="password" type="password" name="password" placeholder="Password" required="required" autocomplete="off" />
+                                        <br>
+                                        <button class="submit1" type="submit">Sign in</button>
+
+                                        <input type="hidden" name="login_type" value="1">
+                                    </form>
+
+                                    <p id="status1"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- login form #2 -->
+                    <div id="two" class="tab-content">
+                        <div class="col-md-0 login-form">
+                            <div class="login-item">
+                                <div class="login-title">
+                                    <p3 class="animated fadeInUp">
+                                        I'm never given out my account information<br>
+                                        I changed my password and you won't easily guess it either!
+                                    </p3>
+                                    <strong class="value animated fadeInUp">Login</strong>
+
+                                    <form id="login-form-2" class="user-login-form form" action="/login" method="post" autocomplete="off">                 
+                                        <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
+                                        <input class="password" type="password" name="password" placeholder="Password" required="required" autocomplete="off" />
+                                        <br>
+                                        <button class="submit2" type="submit">Sign in</button>
+
+                                        <input type="hidden" name="login_type" value="2">
+                                    </form>
+
+                                    <p id="status2"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- login form #3 -->
+                    <div id="three" class="tab-content">
+                        <div class="col-md-0 login-form">
+                            <div class="login-item">
+                                
+                                <div class="login-title">
+                                    <p3 class="animated fadeInUp">
+                                        I learned my lesson, only humans can access my website!
+                                    </p3>
+                                    <strong class="value animated fadeInUp">Login</strong>
+
+                                    <form id="login-form-3" class="user-login-form form" action="/login" method="post" autocomplete="off">                 
+                                        <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
+                                        <input class="password" type="password" name="password" placeholder="Password" required="required" autocomplete="off" />
+                                        <br>
+                                        <button class="submit3" type="submit">Sign in</button>
+
+                                        <input type="hidden" name="login_type" value="3">
+                                    </form>
+
+                                    <p id="status3"></p>
+
+                                    <!-- Captcha area -->
+                                    <div class="captcha-area" style="display: none;">
+                                        <div id="captcha">
+                                            {# Generate the URL for the image file #}
+                                            <img src="{% static 'images/captcha/bjdkeWI=.png' %}" id="captcha-img" alt="CAPTCHA Image">
+                                        </div>
+                                        <form action="javascript:void(0);" method="post" id="captcha-form">
+                                            <input type="text" id="captcha_input" name="captcha_input" placeholder="Type the text" required="required">
+                                        </form>
+                                        <p id="captcha-status"></p>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- login form #4 -->
+                    <div id="four" class="tab-content">
+                        <div class="col-md-0 login-form">
+                            <div class="login-item">
+                                
+                                <div class="login-title">
+                                    <p3 class="animated fadeInUp">
+                                        I implemented a lockout policy and finally am at ease<br>
+                                    </p3>
+                                    <strong class="value animated fadeInUp">Login</strong>
+
+                                    <form id="login-form-4" class="user-login-form form" action="/login" method="post" autocomplete="off">                 
+                                        <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
+                                        <input class="password" type="password" name="password" placeholder="Password" required="required" autocomplete="off" />
+                                        <br>
+                                        <button class="submit4" type="submit">Sign in</button>
+
+                                        <input type="hidden" name="login_type" value="4">
+                                    </form>
+
+                                    <p id="status4"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+        </section>
+       
+        <!-- Website footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="copyright mb-0">
+                            <a href="">SecureWeb</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Tab navigation -->
+        <script>
+            document.querySelectorAll(".tab-list").forEach(function(tabList) {
+                tabList.addEventListener("click", function(e) {
+                  e.preventDefault();
+              
+                  document.querySelectorAll(".tab").forEach(function(tab) {
+                    tab.classList.remove("active");
+                  });
+                  document.querySelectorAll(".tab-content").forEach(function(content) {
+                    content.classList.remove("show");
+                  });
+              
+                  e.target.classList.add("active");
+                  document.querySelector(e.target.getAttribute("href")).classList.add("show");
+                });
+              });
+        </script>
+
+        <!-- Script files -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+    </body>
+</html>

@@ -19,8 +19,12 @@ $(document).ready(function() {
 
     // attempts login
     function login(login_form) {
+        console.log("WE ARE HERE!!!!!\n");
+        console.log("login form: " + login_form)
+
         // construct login post route
-        let route = '/login_' + login_form;
+        // let route = '/login_' + login_form;
+        let route = '/login'
 
         // console.log('posting on route: ' + route);
         let form_id = '#login-form-' + login_form;
