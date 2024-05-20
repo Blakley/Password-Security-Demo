@@ -4,7 +4,7 @@ import base64
 import urllib.parse
 
 from secureweb.scripts.Captchas import captchas
-# from secureweb.scripts.Authenticate
+from secureweb.scripts.Authenticate import _auth
 
 from secureweb.models import Credentials
 from django.templatetags.static import static
@@ -16,7 +16,13 @@ from django.views.decorators.csrf import csrf_exempt
 # =============================
 #  View: /secureweb/
 # =============================
-def home(request):
+def home(request): 
+    # authenticate request
+    _auth.process_request(request, 'home')
+    
+    if _auth.ip in _auth.black_listed_ips:
+        return render(request, "secureweb/error.html")
+
     return render(request, "secureweb/home.html")
 
 
@@ -24,6 +30,12 @@ def home(request):
 #  View: /secureweb/playground
 # =============================
 def playground(request):
+    # authenticate request
+    _auth.process_request(request, 'playground')
+    
+    if _auth.ip in _auth.black_listed_ips:
+        return render(request, "secureweb/error.html") 
+    
     return render(request, "secureweb/playground.html")
 
 
@@ -42,7 +54,25 @@ def login(request):
     # extract login form values
     _email    = request.POST.get('username')
     _password = request.POST.get('password')
+    
+    # authenticate request
+    _auth.process_request(request, 'login', [_email, _password])
+    _client = _auth.ip
 
+    # -------------------------
+    # handle blocked clients
+    # -------------------------
+    if _auth.ip in _auth.black_listed_ips:
+        return render(request, "secureweb/error.html")
+
+    # -------------------------
+    # handle lockedout clients
+    # -------------------------
+
+    # -------------------------
+    # handle normal clients
+    # -------------------------
+    
     # check if the email, password combination exists in the Credentials table
     message = ""
     try:
@@ -108,9 +138,14 @@ def captcha_submit(request):
 def error(request):
     return render(request, "secureweb/error.html")
 
-
-# import authenticate module (scripts.Authenticate.py)
-# in this, we can create the validation functions for rate limiting, captchas, etc
-# todo: fix home page (topic paragraph content alignment)
-# todo: fix utilities scripts
-# todo: update README.md 
+'''
+    TODO:
+    1. [ ] fix home page (topic paragraph content alignment)
+    2. [ ] complete Authenticate.py for login form security
+        - [x] request logging
+        - [ ] rate limiting 
+        - [ ] account lockout times
+        - [ ] blacklisting
+    3. [ ] update utilties scripts with new routes & to work on windows
+    4. [ ] update README.md
+'''

@@ -21,8 +21,6 @@ $(document).ready(function() {
 
     // attempts login
     function login(login_form) {
-        console.log("handling login form: " + login_form)
-
         // construct login post route
         let route = '/secureweb/login/'
         let form_id = '#login-form-' + login_form;
