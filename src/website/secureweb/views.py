@@ -112,3 +112,5 @@ def error(request):
 # import authenticate module (scripts.Authenticate.py)
 # in this, we can create the validation functions for rate limiting, captchas, etc
 # todo: fix home page (topic paragraph content alignment)
+# todo: fix utilities scripts
+# todo: update README.md 
