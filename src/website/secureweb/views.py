@@ -1,7 +1,13 @@
+import random
+
+from secureweb.scripts.Captchas import captchas
+
 from secureweb.models import Credentials
+from django.templatetags.static import static
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+
 
 # =============================
 #  View: /secureweb/
@@ -46,6 +52,29 @@ def login(request):
     return JsonResponse({'message': message})
     
     
+# ===================================
+#  View: /secureweb/captcha_generate 
+# - generating new captcha images
+# ===================================
+def captcha_generate(request):
+    # show a new captcha
+    captcha = random.choice(captchas)
+    captcha_url = static(f'images/captcha/{captcha}')
+    
+    print(f'captcha url: {captcha_url}')
+    
+    return JsonResponse({'captcha': captcha_url})
+    
+    
+# ===================================
+#  View: /secureweb/captcha_submit
+# - form captcha submission 
+# ===================================
+@csrf_exempt
+def captcha_submit(request):
+    pass
+
+    
 # ============================
 #  View: /secureweb/error
 # ============================
@@ -53,12 +82,8 @@ def error(request):
     return render(request, "secureweb/error.html")
 
 
-# ============================
-#  View: /secureweb/generate
-# - generates new captchas
-# ============================
+
 
 # import authenticate module (authenticate.py)
 # in this, we can create the validation functions for rate limiting, captchas, etc
-
 # todo: fix home page (topic paragraph content alignment)

@@ -3,8 +3,7 @@ $(document).ready(function() {
 
     // generates a captcha
     function generate() {
-        let route = '/generate';
-        // let route = '/secureweb/captcha_generate/'
+        let route = '/secureweb/captcha_generate/';
 
         $.get(route, function(data) {
             let captcha = data.captcha;
@@ -87,9 +86,7 @@ $(document).ready(function() {
                 captcha_name: captcha_name
             }
     
-            let route = '/captcha_submit';
-
-            // let route = '/secureweb/captcha_submit/'
+            let route = '/secureweb/captcha_submit/';
     
             // submit captcha, check status
             $.post(route, form, function(data) {
