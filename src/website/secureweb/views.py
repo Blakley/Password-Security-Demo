@@ -1,6 +1,10 @@
+import os
 import random
+import base64
+import urllib.parse
 
 from secureweb.scripts.Captchas import captchas
+# from secureweb.scripts.Authenticate
 
 from secureweb.models import Credentials
 from django.templatetags.static import static
@@ -60,9 +64,6 @@ def captcha_generate(request):
     # show a new captcha
     captcha = random.choice(captchas)
     captcha_url = static(f'images/captcha/{captcha}')
-    
-    print(f'captcha url: {captcha_url}')
-    
     return JsonResponse({'captcha': captcha_url})
     
     
@@ -72,7 +73,33 @@ def captcha_generate(request):
 # ===================================
 @csrf_exempt
 def captcha_submit(request):
-    pass
+    if request.method != "POST":
+        return render(request, "secureweb/error.html")
+    
+    # extract form values
+    captcha_answer = request.POST.get('captcha_input')
+    captcha_name   = request.POST.get('captcha_name')
+    
+    # remove the file extension
+    name, file_extension = os.path.splitext(captcha_name)
+    name = urllib.parse.unquote(name)
+    
+    # check captcha
+    answer = False
+    decoded_bytes = base64.b64decode(name)
+    decoded_string = decoded_bytes.decode('utf-8')
+    
+    if captcha_answer == decoded_string:
+        answer = True
+    
+    # return result
+    new_captcha = random.choice(captchas)
+    result = {
+        'message' : 'correct' if answer else 'Incorrect, try again', 
+        'captcha' : new_captcha
+    }
+    
+    return JsonResponse(result)
 
     
 # ============================
@@ -82,8 +109,6 @@ def error(request):
     return render(request, "secureweb/error.html")
 
 
-
-
-# import authenticate module (authenticate.py)
+# import authenticate module (scripts.Authenticate.py)
 # in this, we can create the validation functions for rate limiting, captchas, etc
 # todo: fix home page (topic paragraph content alignment)
