@@ -4,6 +4,7 @@ $(document).ready(function() {
     // generates a captcha
     function generate() {
         let route = '/generate';
+        // let route = '/secureweb/captcha_generate/'
 
         $.get(route, function(data) {
             let captcha = data.captcha;
@@ -19,14 +20,10 @@ $(document).ready(function() {
 
     // attempts login
     function login(login_form) {
-        console.log("WE ARE HERE!!!!!\n");
-        console.log("login form: " + login_form)
+        console.log("handling login form: " + login_form)
 
         // construct login post route
-        // let route = '/login_' + login_form;
-        let route = '/login'
-
-        // console.log('posting on route: ' + route);
+        let route = '/secureweb/login/'
         let form_id = '#login-form-' + login_form;
 
         // submit login, check status
@@ -91,6 +88,8 @@ $(document).ready(function() {
             }
     
             let route = '/captcha_submit';
+
+            // let route = '/secureweb/captcha_submit/'
     
             // submit captcha, check status
             $.post(route, form, function(data) {

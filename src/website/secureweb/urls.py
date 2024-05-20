@@ -11,5 +11,5 @@ urlpatterns = [
     path("playground/", views.playground, name="playground"),
     path('login/', views.login, name='login'),
     path("error/", views.error, name="error"),
+    # path("captcha", views.captcha, name="captcha"),
 ]
-

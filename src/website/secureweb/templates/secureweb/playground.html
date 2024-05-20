@@ -82,6 +82,7 @@
                         <a class="tab" href="#two">Login 2</a>
                         <a class="tab" href="#three">Login 3</a>
                         <a class="tab" href="#four">Login 4</a>
+                        <!-- <a class="tab" href="#five">Login 5</a> -->
                     </nav>
                     
                     <!-- login form #1 -->
@@ -96,8 +97,8 @@
                                     </p3>
                                     <strong class="value animated fadeInUp">Login</strong>
 
-                                    <form id="login-form-1" class="user-login-form form" action="/login" method="post" autocomplete="off">                 
-                                        
+                                    <form id="login-form-1" class="user-login-form form" method="post" autocomplete="off">                 
+                                        {% csrf_token %}
                                         <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
                                         <input class="password" type="password" name="password" placeholder="Password" required="required" autocomplete="off" />
                                         <br>
@@ -123,7 +124,8 @@
                                     </p3>
                                     <strong class="value animated fadeInUp">Login</strong>
 
-                                    <form id="login-form-2" class="user-login-form form" action="/login" method="post" autocomplete="off">                 
+                                    <form id="login-form-2" class="user-login-form form" method="post" autocomplete="off">                 
+                                        {% csrf_token %}
                                         <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
                                         <input class="password" type="password" name="password" placeholder="Password" required="required" autocomplete="off" />
                                         <br>
@@ -149,7 +151,8 @@
                                     </p3>
                                     <strong class="value animated fadeInUp">Login</strong>
 
-                                    <form id="login-form-3" class="user-login-form form" action="/login" method="post" autocomplete="off">                 
+                                    <form id="login-form-3" class="user-login-form form" method="post" autocomplete="off">                 
+                                        {% csrf_token %}
                                         <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
                                         <input class="password" type="password" name="password" placeholder="Password" required="required" autocomplete="off" />
                                         <br>
@@ -167,6 +170,7 @@
                                             <img src="{% static 'images/captcha/bjdkeWI=.png' %}" id="captcha-img" alt="CAPTCHA Image">
                                         </div>
                                         <form action="javascript:void(0);" method="post" id="captcha-form">
+                                            {% csrf_token %}
                                             <input type="text" id="captcha_input" name="captcha_input" placeholder="Type the text" required="required">
                                         </form>
                                         <p id="captcha-status"></p>
@@ -188,7 +192,8 @@
                                     </p3>
                                     <strong class="value animated fadeInUp">Login</strong>
 
-                                    <form id="login-form-4" class="user-login-form form" action="/login" method="post" autocomplete="off">                 
+                                    <form id="login-form-4" class="user-login-form form" method="post" autocomplete="off">                 
+                                        {% csrf_token %}
                                         <input class="username" type="email" name="username" placeholder="Email" required="required" autocomplete="off" />
                                         <input class="password" type="password" name="password" placeholder="Password" required="required" autocomplete="off" />
                                         <br>
@@ -202,7 +207,9 @@
                             </div>
                         </div>
                     </div>
-                
+                    
+                    <!-- login form #5 [implement SQL injection attacks] -->
+
                 </div>
             </div>
         </section>
