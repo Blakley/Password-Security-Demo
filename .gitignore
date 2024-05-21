@@ -1,8 +1,8 @@
 # Django #
 *.log
+!login.log
 *.pot
 *.pyc
-__pycache__
 db.sqlite3
 media
 
@@ -96,6 +96,10 @@ celerybeat-schedule.*
 
 # SageMath parsed files 
 *.sage.py 
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
 
 # Environments 
 .env 

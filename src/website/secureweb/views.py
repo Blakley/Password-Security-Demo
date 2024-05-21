@@ -132,23 +132,3 @@ def captcha_submit(request):
 # ============================
 def error(request):
     return render(request, "secureweb/error.html")
-
-'''
-    TODO:
-    1. [x] fix home page (topic paragraph content alignment)
-    2. [x] complete Authenticate.py for login form security
-        - [x] request logging
-        - [?] rate limiting 
-        - [?] account lockout times
-        - [?] blacklisting
-        - [x] differentiate security measures for each login form
-    3. [x] update utilties scripts with new routes & to work on windows
-    4. [x] Add function header comments
-    5. [x] update README.md
-        - info on each script (monitor, proxies, attack)
-        - add gif demo of unsuccesful attempts for each login
-        - add gif demo of attack script
-        - add requirements.txt (dependencies)
-    6. [ ] Clean up old code (remove)
-    7. [ ] Rename project
-'''
