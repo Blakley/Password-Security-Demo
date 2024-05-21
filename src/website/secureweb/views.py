@@ -149,4 +149,6 @@ def error(request):
         - add gif demo of unsuccesful attempts for each login
         - add gif demo of attack script
         - add requirements.txt (dependencies)
+    6. [ ] Clean up old code (remove)
+    7. [ ] Rename project
 '''
