@@ -143,7 +143,7 @@ def error(request):
         - [?] blacklisting
         - [x] differentiate security measures for each login form
     3. [x] update utilties scripts with new routes & to work on windows
-    4. [ ] Add function header comments
+    4. [x] Add function header comments
     5. [ ] update README.md
         - info on each script (monitor, proxies, attack)
         - add gif demo of unsuccesful attempts for each login

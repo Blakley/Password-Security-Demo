@@ -6,6 +6,7 @@ from collections import Counter
 from datetime import datetime, timedelta
 
 '''
+    Login Form Authentication Class
 '''
 class Auhentication:
     def __init__(self):
@@ -13,7 +14,7 @@ class Auhentication:
 
 
     # ----------------------------------------
-    #
+    #  Setup auth security variables
     # ----------------------------------------
     def configure(self):
         # lockedout clients that have exceeded threshold
@@ -27,7 +28,11 @@ class Auhentication:
         
         
     # ----------------------------------------
-    # 
+    # Function to setup the request auth
+    #
+    # @param request : request object
+    # @param credentials : [email, password]
+    # @param _form : The specified login form
     # ----------------------------------------
     def process_request(self, request, credentials, _form):
         self.request = request 
@@ -55,7 +60,7 @@ class Auhentication:
 
         
     # ----------------------------------------
-    #
+    # Returns the ip address of the client
     # ----------------------------------------
     def identifiy_request(self):
         x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
@@ -69,7 +74,9 @@ class Auhentication:
 
 
     # ----------------------------------------
-    #
+    # Determines if the client should have:
+    #  1. Their IP blacklisted
+    #  2. Their account locked out
     # ----------------------------------------
     def ratelimit_request(self):
         # skip requests that are blacklisted
@@ -120,21 +127,22 @@ class Auhentication:
     
     
     # ----------------------------------------
-    #
+    # Locks out a user:
+    # no longer able to log in with that email
     # ----------------------------------------
     def lockout_request(self):
         self.locked_accounts.append(self.credentials[0])
 
 
     # ----------------------------------------
-    #
+    # Blocks a client from making requests
     # ----------------------------------------
     def blacklist_request(self):
         self.blacklisted_clients.append(self.ip)
 
 
     # ----------------------------------------
-    #
+    # Adds the request to log file
     # ----------------------------------------
     def log_request(self):
         _time = datetime.now()
