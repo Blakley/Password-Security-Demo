@@ -142,9 +142,11 @@ def error(request):
         - [?] account lockout times
         - [?] blacklisting
         - [x] differentiate security measures for each login form
-    3. [ ] update utilties scripts with new routes & to work on windows
+    3. [x] update utilties scripts with new routes & to work on windows
     4. [ ] Add function header comments
     5. [ ] update README.md
+        - info on each script (monitor, proxies, attack)
         - add gif demo of unsuccesful attempts for each login
         - add gif demo of attack script
+        - add requirements.txt (dependencies)
 '''

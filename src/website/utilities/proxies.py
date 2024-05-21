@@ -18,9 +18,9 @@ class Proxy():
 
     # select script option
     def setup(self):
-        line = '\n================'
-        _a = '    Options:\n'
-        _b = '[1]: Create ips\n[2]: Remove ips\n'
+        line = '\n=================================='
+        _a = '\t    OPTIONS:\n'
+        _b = '> [1]: Create private IP addresses\n> [2]: Remove created IP addresses\n'
         _help = f'{line}\n{_a}\n{_b}{line}\n'
         print(_help)
 
@@ -64,6 +64,11 @@ class Proxy():
 
     # create private ips from list
     def create(self):
+        # handle windows systems
+        if platform.system() == "Windows":
+            print("Creating private IP addresses on Windows is not supported.")
+            return
+        
         # handle linux and macOS(Darwin kernal) systems
         if platform.system() in ['Linux', 'Darwin']:
 
@@ -73,16 +78,9 @@ class Proxy():
                 command = f'sudo ifconfig {alias} {ip} netmask 255.255.255.0 up'
                 subprocess.run(command, shell=True, check=True)
 
-        # handle windows systems
-        if platform.system() == "Windows":
-            for i, ip in enumerate(self.ip_addresses):
-                alias = f"Loopback Pseudo-Interface 1:{i}"
-                command = f'netsh interface ipv4 add address "{alias}" {ip}/24'
-                subprocess.run(command, shell=True, check=True)
+        print('Finished creating private IP addresses\n')
 
-        print('created ips\n')
-
-
+        
     # remove private ips
     def remove(self):
 
@@ -92,18 +90,11 @@ class Proxy():
                 command = f'sudo ifconfig lo:{i} down'
                 subprocess.run(command, shell=True, check=True)
 
-        # handle windows systems
-        if platform.system() == "Windows":
-            for i in range(0, self.ip_amount):
-                alias = f"Loopback Pseudo-Interface 1:{i}"
-                command = f'powershell -Command "Remove-NetIPAddress -InterfaceAlias \'{alias}\'"'
-                subprocess.run(command, shell=True, check=True)
-
         # clear proxy file
         with open('proxies', 'w') as file:
             pass
 
-        print('removed created ips\n')
+        print('Finished removing created IP addresses\n')
 
 
 # start
