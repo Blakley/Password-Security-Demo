@@ -3,26 +3,22 @@ import random
 import base64
 import urllib.parse
 
+import secureweb.scripts.Authenticate
 from secureweb.scripts.Captchas import captchas
-from secureweb.scripts.Authenticate import _auth
 
 from secureweb.models import Credentials
 from django.templatetags.static import static
 from django.shortcuts import render, redirect
-from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponse
 
+# configure authenticator
+_auth = secureweb.scripts.Authenticate.Auhentication()
 
 # =============================
 #  View: /secureweb/
 # =============================
 def home(request): 
-    # authenticate request
-    _auth.process_request(request, 'home')
-    
-    if _auth.ip in _auth.black_listed_ips:
-        return render(request, "secureweb/error.html")
-
     return render(request, "secureweb/home.html")
 
 
@@ -30,12 +26,6 @@ def home(request):
 #  View: /secureweb/playground
 # =============================
 def playground(request):
-    # authenticate request
-    _auth.process_request(request, 'playground')
-    
-    if _auth.ip in _auth.black_listed_ips:
-        return render(request, "secureweb/error.html") 
-    
     return render(request, "secureweb/playground.html")
 
 
@@ -51,24 +41,29 @@ def login(request):
     # get login form ID
     login_form = request.POST.get('login_type')
 
-    # extract login form values
+    # extract login form values and form number
     _email    = request.POST.get('username')
     _password = request.POST.get('password')
-    
+    _form     = request.POST.get('login_type')
+
     # authenticate request
-    _auth.process_request(request, 'login', [_email, _password])
+    _auth.process_request(request, [_email, _password], _form)
     _client = _auth.ip
 
     # -------------------------
     # handle blocked clients
     # -------------------------
-    if _auth.ip in _auth.black_listed_ips:
-        return render(request, "secureweb/error.html")
+    if _auth.ip in _auth.blacklisted_clients and _form == '2':
+        message = f'You have been banned, all login attempts will be blocked'
+        return JsonResponse({'message' : message})
 
     # -------------------------
     # handle lockedout clients
     # -------------------------
-
+    if _email in _auth.locked_accounts and _form == '4':
+        message = f'Your account is temporarily locked, contact the support team'    
+        return JsonResponse({'message' : message})
+    
     # -------------------------
     # handle normal clients
     # -------------------------
@@ -140,12 +135,16 @@ def error(request):
 
 '''
     TODO:
-    1. [ ] fix home page (topic paragraph content alignment)
-    2. [ ] complete Authenticate.py for login form security
+    1. [x] fix home page (topic paragraph content alignment)
+    2. [x] complete Authenticate.py for login form security
         - [x] request logging
-        - [ ] rate limiting 
-        - [ ] account lockout times
-        - [ ] blacklisting
+        - [?] rate limiting 
+        - [?] account lockout times
+        - [?] blacklisting
+        - [x] differentiate security measures for each login form
     3. [ ] update utilties scripts with new routes & to work on windows
-    4. [ ] update README.md
+    4. [ ] Add function header comments
+    5. [ ] update README.md
+        - add gif demo of unsuccesful attempts for each login
+        - add gif demo of attack script
 '''

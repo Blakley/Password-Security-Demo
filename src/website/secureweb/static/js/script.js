@@ -7,9 +7,6 @@ $(document).ready(function() {
 
         $.get(route, function(data) {
             let captcha = data.captcha;
-
-            console.log("new captcha from server-client: " + captcha);
-
             // Set the captcha image source and hash value
             $("#captcha-img").attr("src", captcha);
 
