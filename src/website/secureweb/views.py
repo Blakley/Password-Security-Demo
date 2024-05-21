@@ -144,7 +144,7 @@ def error(request):
         - [x] differentiate security measures for each login form
     3. [x] update utilties scripts with new routes & to work on windows
     4. [x] Add function header comments
-    5. [ ] update README.md
+    5. [x] update README.md
         - info on each script (monitor, proxies, attack)
         - add gif demo of unsuccesful attempts for each login
         - add gif demo of attack script
